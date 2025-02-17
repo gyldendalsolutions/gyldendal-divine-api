@@ -1,6 +1,5 @@
 {
   "name": "@gyldendalas/gyldendal-divine-api",
-  "private": true,
   "type": "module",
   "scripts": {
     "package": "tsup"
@@ -9,5 +8,13 @@
     "tsup": "^8.3.6",
     "typescript": "^5.7.3",
     "@types/node": "^22.10.10"
-  }
+  },
+  "version": "0.0.1",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs"
 }
