@@ -45,27 +45,91 @@ export class UserFolders extends TaggingService {
     {
       folder_name,
       parent_folder_uuid,
+      color,
       timeout = 3000
     }:
     {
       folder_name: string,
+      color: string,
       parent_folder_uuid?: string,
       timeout?: number
     }
   ): Promise<Folder> {
+    const folder_payload = JSON.stringify({"folder": folder_name, "color": color});
     const tag = await this.createTag(
       {
         tag: {
           identity: await this.getIdentity(),
           resource_type: 'myaccount_user_folder',
           resource_name: crypto.randomUUID(),
-          tag_name: Buffer.from(folder_name).toString('base64'),
+          tag_name: Buffer.from(folder_payload).toString('base64'),
           tag_value: parent_folder_uuid ?? '-',
         },
         timeout
       }
     );
     return {name: folder_name, uuid: tag['resource_name'], parent: parent_folder_uuid} as Folder;
+  }
+
+  async updateFolder(
+    {
+      folder_uuid,
+      folder_name,
+      color,
+      parent_folder_uuid,
+      timeout = 3000
+    }:
+    {
+      folder_uuid: string,
+      color?: string,
+      parent_folder_uuid?: string,
+      folder_name?: string,
+      timeout?: number
+    }
+  ): Promise<Folder> {
+    const tags = await this.getTagsByName(
+      {
+        identity: await this.getIdentity(),
+        resource_type: 'myaccount_user_folder',
+        resource_name: folder_uuid,
+        timeout
+      }
+    );
+
+    if (tags.length === 0) {
+      throw new Error(`Folder with UUID ${folder_uuid} not found`);
+    }
+
+    const tag = tags[0];
+    const folder_payload = JSON.parse(Buffer.from(tag['tag_name'], 'base64').toString());
+    const new_folder_name = folder_name ?? folder_payload['folder'];
+    const new_color = color ?? folder_payload['color'];
+    const new_parent = parent_folder_uuid ?? tag['tag_value'];
+
+    const new_folder_payload = JSON.stringify({"folder": new_folder_name, "color": new_color});
+
+    await this.deleteTag(
+      {
+        identity: await this.getIdentity(),
+        resource_type: 'myaccount_user_folder',
+        resource_name: folder_uuid,
+        timeout
+      }
+    );
+
+    await this.createTag(
+      {
+        tag: {
+          identity: await this.getIdentity(),
+          resource_type: 'myaccount_user_folder',
+          resource_name: folder_uuid,
+          tag_name: Buffer.from(new_folder_payload).toString('base64'),
+          tag_value: tag['tag_value'],
+        },
+        timeout
+      }
+    );
+    return {name: new_folder_name, uuid: folder_uuid, parent: new_parent ?? '-'} as Folder;
   }
 
   async listFolders(
@@ -101,9 +165,11 @@ export class UserFolders extends TaggingService {
     let folders = [];
 
     for (const tag of tags) {
+      const folder_payload = JSON.parse(Buffer.from(tag['tag_name'], 'base64').toString());
       folders.push(
         {
-          name: Buffer.from(tag['tag_name'], 'base64').toString(),
+          name: folder_payload['folder'],
+          color: folder_payload['color'],
           uuid: tag['resource_name'],
           parent: tag['tag_value'] === '-' ? undefined : tag['tag_value']
         } as Folder
@@ -135,6 +201,14 @@ export class UserFolders extends TaggingService {
 
     for (const tag of tags) {
       if (tag['resource_type'] === 'myaccount_user_folder') {
+        const folder_payload = JSON.parse(Buffer.from(tag['tag_name'], 'base64').toString());
+        content.push({
+            name: folder_payload['folder'],
+            color: folder_payload['color'],
+            uuid: tag['resource_name'],
+            parent: tag['tag_value']
+          } as Folder)
+      } else {
         content.push(
           {
             type: tag['resource_type'],
@@ -142,13 +216,6 @@ export class UserFolders extends TaggingService {
             folder_uuid: tag['tag_value']
           } as FolderContent
         );
-      } else {
-        let folder = {
-            name: Buffer.from(tag['tag_name'], 'base64').toString(),
-            uuid: tag['resource_name'],
-            parent: tag['tag_value']
-          } as Folder
-        content.push(folder);
       }
     }
 

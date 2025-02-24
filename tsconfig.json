@@ -5,9 +5,9 @@
     "module": "Node16",
     "target": "esnext",
     "strict": true,
-      "lib": [
-        "esnext",
-        "dom"
-      ],
+    "lib": [
+      "esnext",
+      "dom"
+    ]
   }
 }
