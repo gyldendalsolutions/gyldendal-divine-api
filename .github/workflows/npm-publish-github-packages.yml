@@ -2,10 +2,13 @@ name: Publish package
 
 on:
   release:
-    types: [created]
+    types: [ created ]
 
 jobs:
   publish:
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{secrets.PUBLIC_NPM_AUTH_TOKEN}}
