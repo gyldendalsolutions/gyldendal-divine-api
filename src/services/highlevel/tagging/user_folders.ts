@@ -43,7 +43,13 @@ export class UserFolders extends TaggingService {
   }
 
   /**
-  *  Create a folder. The function returns a Folder object.
+  *  Create a folder.
+  *  @param folder_name The name of the folder.
+  *  @param parent_folder_uuid The UUID of the parent folder. If no parent folder is provided, the folder is created at the root level.
+  *  @param color The color of the folder.
+  *  @param timeout The timeout for the request in milliseconds.
+  *
+  *  @return Folder
   **/
   async createFolder(
     {
@@ -76,7 +82,14 @@ export class UserFolders extends TaggingService {
   }
 
   /**
-  *  Update a folder. The function returns a Folder object.
+  *  Update a folder. Only name and color can be changed.
+  *
+  * @param folder_uuid The UUID of the folder.
+  * @param folder_name The new name of the folder.
+  * @param color The new color of the folder.
+  * @param timeout The timeout for the request in milliseconds.
+  *
+  * @return Folder
   **/
   async updateFolder(
     {
@@ -130,7 +143,11 @@ export class UserFolders extends TaggingService {
   }
 
   /**
-  * List all folders in the user's account. The function returns an array of Folder objects.
+  * List all folders in the user's account.
+  * 
+  * @param timeout The timeout for the request in milliseconds.
+  *
+  * @return Folder[]
   **/
   async listAllFolders(
     {
@@ -166,7 +183,12 @@ export class UserFolders extends TaggingService {
   }
 
   /**
-   * List the next level of folders in the user's account. The function returns an array of Folder objects.
+   * List the next level of folders in the user's account.
+   *
+   * @param parent_folder_uuid The UUID of the parent folder. If no parent folder is provided, the folder is created at the root level.
+   * @param timeout The timeout for the request in milliseconds.
+   *
+   * @return Folder[]
   **/
   async listNextFolderLevel(
     {
@@ -210,7 +232,12 @@ export class UserFolders extends TaggingService {
   }
 
   /**
-   * List the content of a folder. The function returns an array of FolderContent and/or folder objects.
+   * List the content of a folder.
+   *
+   * @param folder_uuid The UUID of the folder.
+   * @param timeout The timeout for the request in milliseconds.
+   *
+   * @return FolderContent[]
   **/
   async getFolderContent(
     {
@@ -256,7 +283,13 @@ export class UserFolders extends TaggingService {
   }
 
   /**
-   * Add a book to a folder. The function returns a FolderContent object.
+   * Add a book to a folder.
+   *
+   * @param folder_uuid The UUID of the folder.
+   * @param isbn The ISBN of the book.
+   * @param timeout The timeout for the request in milliseconds.
+   *
+   * @return FolderContent
   **/
   async addInternetbookToFolder(
     {
@@ -281,7 +314,13 @@ export class UserFolders extends TaggingService {
   }
 
   /**
-   * remove a book from a folder. The function returns a FolderContent object.
+   * Remove a book from a folder.
+   *
+   * @param folder_uuid The UUID of the folder.
+   * @param isbn The ISBN of the book.
+   * @param timeout The timeout for the request in milliseconds.
+   *
+   * @return FolderContent
   **/
   async removeInternetbookFromFolder(
     {
@@ -307,6 +346,13 @@ export class UserFolders extends TaggingService {
 
   /**
    * Create a new folder content element.
+   *
+   * @param folder_uuid The UUID of the folder.
+   * @param resource_name The name of the resource.
+   * @param resource_type The type of the resource.
+   * @param timeout The timeout for the request in milliseconds.
+   *
+   * @return FolderContent
   **/
   async addContentToFolder(
     {
@@ -339,6 +385,13 @@ export class UserFolders extends TaggingService {
 
   /**
    * Create a new folder content element.
+   *
+   * @param folder_uuid The UUID of the folder.
+   * @param resource_name The name of the resource.
+   * @param resource_type The type of the resource.
+   * @param timeout The timeout for the request in milliseconds.
+   *
+   * @return FolderContent
   **/
   async removeContentFromFolder(
     {
@@ -368,6 +421,11 @@ export class UserFolders extends TaggingService {
 
   /**
    * Delete a folder.
+   *
+   * @param folder_uuid The UUID of the folder.
+   * @param timeout The timeout for the request in milliseconds.
+   *
+   * @return void
   **/
   async deleteFolder(
     {
@@ -390,7 +448,11 @@ export class UserFolders extends TaggingService {
   }
 
   /**
-   * Delete all folders.
+   * Delete all folders. Note, this will not delete the content of the folders.
+   *
+   * @param timeout The timeout for the request in milliseconds.
+   *
+   * @return void
   **/
   async deleteAllFolders(
     {
