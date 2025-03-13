@@ -22,23 +22,23 @@ export class TaggingService extends BaseService {
     }
   };
 
-  async getTagsByValue(
+  async getTagsByResource(
     {
       identity,
       resource_type,
       resource_name,
-      tag_value,
+      tag_name,
       timeout = 3000
     }:
     {
-      tag_value: string,
       identity: string,
+      tag_name?: string,
       resource_type?: string,
       resource_name?: string,
       timeout?: number
     }
   ): Promise<Tag[]> {
-    const url = `${this.getUrlPrefix()}/tags/by_value/${tag_value}/${identity}${resource_type ? `/${resource_type}` : ''}${resource_name ? `/${resource_name}` : ''}`;
+    const url = `${this.getUrlPrefix()}/tags/by_resource/${identity}${resource_type ? `/${resource_type}` : ''}${resource_name ? `/${resource_name}` : ''}${tag_name ? `/${tag_name}` : ''}`;
 
     const headers: HeadersInit = new Headers();
     return await this.getAsync({url, headers, timeout}) as Tag[];
@@ -54,19 +54,36 @@ export class TaggingService extends BaseService {
     }:
     {
       identity: string,
+      tag_name: string,
       resource_type?: string,
       resource_name?: string,
-      tag_name?: string,
       timeout?: number
     }
   ): Promise<Tag[]> {
-    const url = `${this.getUrlPrefix()}/tags/by_name/${identity}${resource_type ? `/${resource_type}` : ''}${resource_name ? `/${resource_name}` : ''}${tag_name ? `/${tag_name}` : ''}`;
+    const url = `${this.getUrlPrefix()}/tags/by_tag_name/${identity}/${tag_name}${resource_type ? `/${resource_type}` : ''}${resource_name ? `/${resource_name}` : ''}`;
 
     const headers: HeadersInit = new Headers();
     return await this.getAsync({url, headers, timeout}) as Tag[];
   }
 
   async createTag(
+    {
+      tag,
+      timeout = 3000
+    }:
+    {
+      tag: Tag,
+      timeout?: number
+    }
+  ): Promise<Tag> {
+    const url = `${this.getUrlPrefix()}/tags`;
+    const headers: HeadersInit = new Headers();
+
+    headers.append('Content-Type', "application/json");
+    return await this.postAsync({url, headers, body: JSON.stringify(tag), timeout}) as Tag;
+  }
+
+  async updateTag(
     {
       tag,
       timeout = 3000
@@ -99,7 +116,7 @@ export class TaggingService extends BaseService {
       timeout?: number
     }
   ): Promise<void> {
-    const url = `${this.getUrlPrefix()}/tags/by_name/${identity}${resource_type ? `/${resource_type}` : ''}${resource_name ? `/${resource_name}` : ''}${tag_name ? `/${tag_name}` : ''}`;
+    const url = `${this.getUrlPrefix()}/tags/${identity}${resource_type ? `/${resource_type}` : ''}${resource_name ? `/${resource_name}` : ''}${tag_name ? `/${tag_name}` : ''}`;
 
     const headers: HeadersInit = new Headers();
     await this.deleteAsync({url, headers, timeout});

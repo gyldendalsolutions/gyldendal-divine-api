@@ -96,6 +96,25 @@ export class BaseService {
     return response.json();
   }
 
+  async postAsync(
+    {
+      url,
+      headers,
+      body,
+      timeout
+    }:
+    {
+      url: URL | string,
+      headers: Headers | undefined | null,
+      body: string | null | undefined,
+      timeout: number
+    }
+  ): Promise<object> {
+    const method = 'POST';
+    const response = await this.callAsync({ url, body, method, headers, timeout });
+    return response.json();
+  }
+
   async deleteAsync(
     {
       url,
@@ -142,7 +161,7 @@ export class BaseService {
     });
 
     if (!response.ok) {
-					throw new HTTPError(`Got ${response.status} while calling ${response.url}`, response);
+		throw new HTTPError(`Got ${response.status} while calling ${response.url}`, response);
     }
     return response;
   }
