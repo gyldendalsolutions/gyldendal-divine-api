@@ -1,15 +1,18 @@
-import crypto from 'crypto';
 import TaggingService from '../../tagging_service.js';
+import {v4 as uuidv4} from 'uuid';
 
-interface FolderObject {}
+export interface FolderObject {
+    created_at: number;
+}
 
-interface Folder extends FolderObject {
+export interface Folder extends FolderObject {
   name: string;
+  color: string;
   uuid: string;
   parent?: string;
 }
 
-interface FolderContent extends FolderObject {
+export interface FolderContent extends FolderObject {
   type: string;
   identifier: string;
   folder_uuid: string;
@@ -71,14 +74,14 @@ export class UserFolders extends TaggingService {
         tag: {
           identity: await this.getIdentity(),
           resource_type: 'myaccount_user_folder',
-          resource_name: crypto.randomUUID(),
+          resource_name: uuidv4(),
           tag_name: parent_folder_uuid ?? this.hasNoParent,
           tag_value: Buffer.from(folder_payload).toString('base64'),
         },
         timeout
       }
     );
-    return {name: folder_name, uuid: tag['resource_name'], parent: parent_folder_uuid} as Folder;
+    return {name: folder_name, uuid: tag['resource_name'], parent: parent_folder_uuid, created_at: tag['created_at']} as Folder;
   }
 
   /**
@@ -125,7 +128,7 @@ export class UserFolders extends TaggingService {
 
     const new_folder_payload = JSON.stringify({"folder": new_folder_name, "color": new_color});
 
-    await this.updateTag(
+    const updatedTag = await this.updateTag(
       {
         tag: {
           identity: await this.getIdentity(),
@@ -139,7 +142,7 @@ export class UserFolders extends TaggingService {
     );
 
     const parent = tag['tag_name'] === this.hasNoParent ? undefined : tag['tag_name'];
-    return {name: new_folder_name, uuid: folder_uuid, parent: parent} as Folder;
+    return {name: new_folder_name, uuid: folder_uuid, parent: parent, created_at: updatedTag['created_at']} as Folder;
   }
 
   /**
@@ -174,7 +177,8 @@ export class UserFolders extends TaggingService {
           name: folder_payload['folder'],
           color: folder_payload['color'],
           uuid: tag['resource_name'],
-          parent: tag['tag_name'] === this.hasNoParent ? undefined : tag['tag_name']
+          parent: tag['tag_name'] === this.hasNoParent ? undefined : tag['tag_name'],
+          created_at: tag['created_at']
         } as Folder
       );
     }
@@ -223,7 +227,8 @@ export class UserFolders extends TaggingService {
           name: folder_payload['folder'],
           color: folder_payload['color'],
           uuid: tag['resource_name'],
-          parent: tag['tag_name'] === this.hasNoParent ? undefined : tag['tag_name']
+          parent: tag['tag_name'] === this.hasNoParent ? undefined : tag['tag_name'],
+          created_at: tag['created_at']
         } as Folder
       );
     }
@@ -237,7 +242,7 @@ export class UserFolders extends TaggingService {
    * @param folder_uuid The UUID of the folder.
    * @param timeout The timeout for the request in milliseconds.
    *
-   * @return FolderContent[]
+* @return (Folder | FolderContent)[]
   **/
   async getFolderContent(
     {
@@ -248,7 +253,7 @@ export class UserFolders extends TaggingService {
       folder_uuid: string,
       timeout?: number
     }
-  ): Promise<FolderObject[]> {
+  ): Promise<(Folder|FolderContent)[]> {
     let tags = await this.getTagsByName(
       {
         identity: await this.getIdentity(),
@@ -266,14 +271,16 @@ export class UserFolders extends TaggingService {
             name: folder_payload['folder'],
             color: folder_payload['color'],
             uuid: tag['resource_name'],
-            parent: tag['tag_name']
+            parent: tag['tag_name'],
+            created_at: tag['created_at']
           } as Folder)
       } else {
         content.push(
           {
             type: tag['resource_type'],
             identifier: tag['resource_name'],
-            folder_uuid: tag['tag_name']
+            folder_uuid: tag['tag_name'],
+            created_at: tag['created_at']
           } as FolderContent
         );
       }
@@ -320,7 +327,7 @@ export class UserFolders extends TaggingService {
    * @param isbn The ISBN of the book.
    * @param timeout The timeout for the request in milliseconds.
    *
-   * @return FolderContent
+   * @return void
   **/
   async removeInternetbookFromFolder(
     {
@@ -333,8 +340,8 @@ export class UserFolders extends TaggingService {
       isbn: string,
       timeout?: number
     }
-  ): Promise<FolderContent> {
-    return await this.removeContentFromFolder(
+  ): Promise<void> {
+     await this.removeContentFromFolder(
       {
         folder_uuid,
         resource_type: 'internetbook',
@@ -368,7 +375,7 @@ export class UserFolders extends TaggingService {
       timeout?: number
     }
   ): Promise<FolderContent> {
-    await this.createTag(
+    const tag = await this.createTag(
       {
         tag: {
           identity: await this.getIdentity(),
@@ -380,18 +387,18 @@ export class UserFolders extends TaggingService {
         timeout
       }
     );
-    return {type: resource_type, identifier: resource_name, folder_uuid} as FolderContent;
+    return {type: resource_type, identifier: resource_name, folder_uuid, created_at: tag['created_at']} as FolderContent;
   }
 
   /**
-   * Create a new folder content element.
+   * Remove a folder content element.
    *
    * @param folder_uuid The UUID of the folder.
    * @param resource_name The name of the resource.
    * @param resource_type The type of the resource.
    * @param timeout The timeout for the request in milliseconds.
    *
-   * @return FolderContent
+   * @return void
   **/
   async removeContentFromFolder(
     {
@@ -406,7 +413,7 @@ export class UserFolders extends TaggingService {
       resource_type: string,
       timeout?: number
     }
-  ): Promise<FolderContent> {
+  ): Promise<void> {
     await this.deleteTag(
       {
         identity: await this.getIdentity(),
@@ -416,7 +423,6 @@ export class UserFolders extends TaggingService {
         timeout
       }
     );
-    return {type: resource_type, identifier: resource_name, folder_uuid} as FolderContent;
   }
 
   /**

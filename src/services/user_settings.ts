@@ -7,7 +7,7 @@ export class UserSettings extends BaseService {
         return 'http://localhost:4000';
       case 'production':
         return `https://user-settings-service.services.${this.baseDomain}`;
-      case 'staging':
+      case 'development':
         return `https://${this.environment}-user-settings-service.services.${this.baseDomain}`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
