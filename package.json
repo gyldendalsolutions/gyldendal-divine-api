@@ -4,10 +4,13 @@
   "scripts": {
     "package": "tsup"
   },
+  "dependencies": {
+    "uuid": "^11"
+  },
   "devDependencies": {
+    "@types/node": "^22.10.10",
     "tsup": "^8.4",
-    "typescript": "^5.7.3",
-    "@types/node": "^22.10.10"
+    "typescript": "^5.7.3"
   },
   "license": "MIT",
   "files": [
