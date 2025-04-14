@@ -15,12 +15,11 @@ export interface TagOutput extends Tag {
 export class TaggingService extends BaseService {
   discoverUrlPrefix(): string {
     switch (this.environment) {
-      case 'local':
-        return 'http://localhost:4000';
       case 'production':
         return `https://tagging.services.${this.baseDomain}`;
       case 'development':
-        return `https://${this.environment}-tagging.services.${this.baseDomain}`;
+      case 'local':
+        return `https://staging-tagging.services.${this.baseDomain}`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }
