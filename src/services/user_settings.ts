@@ -3,11 +3,10 @@ import BaseService from './base_service.js';
 export class UserSettings extends BaseService {
   discoverUrlPrefix(): string {
     switch (this.environment) {
-      case 'local':
-        return 'http://localhost:4000';
       case 'production':
         return `https://user-settings-service.services.${this.baseDomain}`;
       case 'development':
+      case 'local':
         return `https://${this.environment}-user-settings-service.services.${this.baseDomain}`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
