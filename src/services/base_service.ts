@@ -1,4 +1,4 @@
-class HTTPError extends Error {
+export class HTTPError extends Error {
   public response: Response;
   
   constructor(message: string, response: Response) {
@@ -129,6 +129,9 @@ export class BaseService {
   ): Promise<object> {
     const method = 'DELETE';
     const response = await this.callAsync({ url, body: null, method, headers, timeout });
+    if (response.status === 204) {
+        return {};
+    }
     return response.json();
   }
 
