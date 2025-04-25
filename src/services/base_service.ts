@@ -64,75 +64,76 @@ export class BaseService {
     {
       url,
       headers,
+      addAuthHeaders = true,
       timeout
     }:
     {
       url: URL | string,
       headers: Headers | undefined | null,
+      addAuthHeaders?: boolean,
       timeout: number
     }
-  ): Promise<object> {
+  ): Promise<Response> {
     const method = 'GET';
-    const response = await this.callAsync({ url, body: null, method, headers, timeout });
-    return response.json();
+    return await this.callAsync({ url, body: null, method, headers, addAuthHeaders, timeout });
   }
 
   async putAsync(
     {
       url,
       headers,
+      addAuthHeaders = true,
       body,
       timeout
     }:
     {
       url: URL | string,
       headers: Headers | undefined | null,
+      addAuthHeaders?: boolean,
       body: string | null | undefined,
       timeout: number
     }
-  ): Promise<object> {
+  ): Promise<Response> {
     const method = 'PUT';
-    const response = await this.callAsync({ url, body, method, headers, timeout });
-    return response.json();
+    return await this.callAsync({ url, body, method, headers, addAuthHeaders, timeout });
   }
 
   async postAsync(
     {
       url,
       headers,
+      addAuthHeaders = true,
       body,
       timeout
     }:
     {
       url: URL | string,
       headers: Headers | undefined | null,
+      addAuthHeaders?: boolean,
       body: string | null | undefined,
       timeout: number
     }
-  ): Promise<object> {
+  ): Promise<Response> {
     const method = 'POST';
-    const response = await this.callAsync({ url, body, method, headers, timeout });
-    return response.json();
+    return await this.callAsync({ url, body, method, headers, addAuthHeaders, timeout });
   }
 
   async deleteAsync(
     {
       url,
       headers,
+      addAuthHeaders = true,
       timeout
     }:
     {
       url: URL | string,
       headers: Headers | undefined | null,
+      addAuthHeaders?: boolean,
       timeout: number
     }
-  ): Promise<object> {
+  ): Promise<Response> {
     const method = 'DELETE';
-    const response = await this.callAsync({ url, body: null, method, headers, timeout });
-    if (response.status === 204) {
-        return {};
-    }
-    return response.json();
+    return await this.callAsync({ url, body: null, method, headers, addAuthHeaders, timeout });
   }
 
   async callAsync(
@@ -141,23 +142,28 @@ export class BaseService {
       body,
       method,
       headers,
-      timeout
+      timeout,
+      addAuthHeaders
     }:
     {
       url: URL | string,
       body: string | null | undefined,
       method: string,
       headers: Headers | undefined | null,
-      timeout: number
+      timeout: number,
+      addAuthHeaders?: boolean,
     }
   ): Promise<Response> {
     if (!headers) {
       headers = new Headers();
     }
 
-    headers = await this.addAuthHeaders(headers);
+    if (addAuthHeaders) {
+      headers = await this.addAuthHeaders(headers);
+    }
+
     const response = await fetch(url, {
-	    method: method,
+      method: method,
       body: body,
       headers: headers,
       signal: AbortSignal.timeout(timeout)

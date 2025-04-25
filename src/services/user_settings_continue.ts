@@ -36,7 +36,9 @@ export class UserSettingsContinue extends UserSettingsBase {
     }
 
     headers.set('Content-Type', 'application/json');
-    return await this.putAsync({url, headers, body: JSON.stringify(continueBody), timeout}) as Continue;
+    const response = await this.putAsync({url, headers, body: JSON.stringify(continueBody), timeout});
+    return response.json();
+
   }
 
   async deleteContinue(
@@ -71,7 +73,8 @@ export class UserSettingsContinue extends UserSettingsBase {
     const headers: HeadersInit = new Headers();
 
     try {
-        return await this.getAsync({url, headers, timeout}) as Continue;
+        const response = await this.getAsync({url, headers, timeout});
+        return response.json();
     } catch (Error) {
       if (Error instanceof HTTPError && Error.response.status === 404) {
         return {} as Continue;

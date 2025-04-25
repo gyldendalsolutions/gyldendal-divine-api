@@ -10,10 +10,6 @@ export interface BookmarkUpdate {
     contentId: number;
 }
 
-export interface BookmarkResponse {
-  bookmarks: Bookmark[];
-}
-
 export class UserSettingsBookmarks extends UserSettingsBase {
   async setBookmark(
     {
@@ -37,7 +33,8 @@ export class UserSettingsBookmarks extends UserSettingsBase {
     }
 
     headers.set('Content-Type', 'application/json');
-    return await this.putAsync({url, headers, body: JSON.stringify(bookmark), timeout}) as Bookmark;
+    const response = await this.putAsync({url, headers, body: JSON.stringify(bookmark), timeout});
+    return response.json();
   }
 
   async deleteBookmark(
@@ -72,7 +69,7 @@ export class UserSettingsBookmarks extends UserSettingsBase {
       pageId?: number,
       timeout?: number
     }
-  ): Promise<BookmarkResponse> {
+  ): Promise<Bookmark[]> {
     if (!isbn && pageId) {
         throw new Error('The isbn parameter is required if pageId is provided.');
     }
@@ -87,7 +84,8 @@ export class UserSettingsBookmarks extends UserSettingsBase {
     }
     const headers: HeadersInit = new Headers();
 
-    return await this.getAsync({url, headers, timeout}) as BookmarkResponse;
+    const response = await this.getAsync({url, headers, timeout});
+    return response.json();
   }
 
   // Favourites are bookmarks that are ISBN specific, with a pageId of 0.
@@ -98,14 +96,14 @@ export class UserSettingsBookmarks extends UserSettingsBase {
     {
       timeout?: number
     }
-  ): Promise<BookmarkResponse> {
+  ): Promise<Bookmark[]> {
     let url = `${this.getUrlPrefix()}/bookmark/favourite`;
 
     const headers: HeadersInit = new Headers();
 
-    return await this.getAsync({url, headers, timeout}) as BookmarkResponse;
+    const response = await this.getAsync({url, headers, timeout});
+    return response.json();
   }
-
 }
 
 export default UserSettingsBookmarks;
