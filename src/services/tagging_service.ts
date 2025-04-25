@@ -44,7 +44,8 @@ export class TaggingService extends BaseService {
     const url = `${this.getUrlPrefix()}/tags/by_resource/${identity}${resource_type ? `/${resource_type}` : ''}${resource_name ? `/${resource_name}` : ''}${tag_name ? `/${tag_name}` : ''}`;
 
     const headers: HeadersInit = new Headers();
-    return await this.getAsync({url, headers, timeout}) as TagOutput[];
+    const response = await this.getAsync({url, headers, timeout});
+    return response.json();
   }
 
   async getTagsByName(
@@ -66,7 +67,8 @@ export class TaggingService extends BaseService {
     const url = `${this.getUrlPrefix()}/tags/by_tag_name/${identity}/${tag_name}${resource_type ? `/${resource_type}` : ''}${resource_name ? `/${resource_name}` : ''}`;
 
     const headers: HeadersInit = new Headers();
-    return await this.getAsync({url, headers, timeout}) as TagOutput[];
+    const response = await this.getAsync({url, headers, timeout});
+    return await response.json();
   }
 
   async createTag(
@@ -83,7 +85,8 @@ export class TaggingService extends BaseService {
     const headers: HeadersInit = new Headers();
 
     headers.append('Content-Type', "application/json");
-    return await this.postAsync({url, headers, body: JSON.stringify(tag), timeout}) as TagOutput;
+    const response = await this.postAsync({url, headers, body: JSON.stringify(tag), timeout});
+    return await response.json();
   }
 
   async updateTag(
@@ -100,7 +103,8 @@ export class TaggingService extends BaseService {
     const headers: HeadersInit = new Headers();
 
     headers.append('Content-Type', "application/json");
-    return await this.putAsync({url, headers, body: JSON.stringify(tag), timeout}) as TagOutput;
+    const response = await this.putAsync({url, headers, body: JSON.stringify(tag), timeout});
+    return await response.json();
   }
 
   async deleteTag(
@@ -122,7 +126,9 @@ export class TaggingService extends BaseService {
     const url = `${this.getUrlPrefix()}/tags/${identity}${resource_type ? `/${resource_type}` : ''}${resource_name ? `/${resource_name}` : ''}${tag_name ? `/${tag_name}` : ''}`;
 
     const headers: HeadersInit = new Headers();
-    await this.deleteAsync({url, headers, timeout});
+    const response = await this.deleteAsync({url, headers, timeout});
+    await response.json();
+    return
   }
 }
 

@@ -82,7 +82,8 @@ export class UserSettingsClientSettings extends UserSettingsBase {
     const headers: HeadersInit = new Headers();
 
     try {
-        return await this.getAsync({url, headers, timeout}) as ClientSettings;
+        const response = await this.getAsync({url, headers, timeout});
+        return response.json();
     } catch (Error) {
       if (Error instanceof HTTPError && Error.response.status === 404) {
         return {} as ClientSettings;
@@ -108,7 +109,8 @@ export class UserSettingsClientSettings extends UserSettingsBase {
     const headers: HeadersInit = new Headers();
 
     headers.set('Content-Type', 'application/json');
-    return await this.putAsync({url, headers, body: JSON.stringify(settings), timeout}) as ClientSettings;
+    const response = await this.putAsync({url, headers, body: JSON.stringify(settings), timeout});
+    return response.json();
   }
 
   async deleteSettings(
