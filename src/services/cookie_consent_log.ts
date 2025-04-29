@@ -26,6 +26,8 @@ export class CookieConsentLog extends BaseService {
       case 'development':
       case 'local':
         return `https://staging-cookieconsentlog.services.${this.baseDomain}`;
+      case 'test':
+        return `https://localhost:3010/services/cookieconsentlog`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }

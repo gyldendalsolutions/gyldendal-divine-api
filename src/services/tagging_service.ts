@@ -20,6 +20,8 @@ export class TaggingService extends BaseService {
       case 'development':
       case 'local':
         return `https://staging-tagging.services.${this.baseDomain}`;
+      case 'test':
+        return `https://localhost:3010/services/tagging`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }
