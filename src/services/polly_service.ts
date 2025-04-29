@@ -37,6 +37,8 @@ export class PollyService extends BaseService {
       case 'development':
       case 'local':
         return `https://staging-appear-polly.services.${this.baseDomain}`;
+      case 'test':
+        return `https://localhost:3010/services/polly`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }

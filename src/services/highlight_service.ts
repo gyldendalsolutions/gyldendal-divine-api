@@ -100,6 +100,8 @@ export class HighlightService extends BaseService {
       case 'development':
       case 'local':
         return `https://staging-highlights.services.${this.baseDomain}`;
+      case 'test':
+        return `https://localhost:3010/services/highlight`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }

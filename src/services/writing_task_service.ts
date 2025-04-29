@@ -8,6 +8,8 @@ export class WritingTaskService extends BaseService {
       case 'development':
       case 'local':
         return `https://staging-writingtask.services.${this.baseDomain}`;
+      case 'test':
+        return `https://localhost:3010/services/writingtask`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }

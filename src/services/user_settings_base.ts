@@ -8,6 +8,8 @@ export class UserSettingsBase extends BaseService {
       case 'development':
       case 'local':
         return `https://staging-user-settings-service.services.${this.baseDomain}`;
+      case 'test':
+        return `https://localhost:3010/services/usersettingsservice`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }

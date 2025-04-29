@@ -149,6 +149,8 @@ export class PdfGeneratorService extends BaseService {
       case 'development':
       case 'local':
         return `https://staging-pdfgenerator.services.${this.baseDomain}`;
+      case 'test':
+        return `https://localhost:3010/services/pdfgenerator`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }

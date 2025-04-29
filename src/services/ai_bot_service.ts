@@ -56,6 +56,8 @@ export class AIBotService extends BaseService {
       case 'development':
       case 'local':
         return `https://ai-bot-service-staging.eu-west-1.${this.baseDomain}`;
+      case 'test':
+        return `https://localhost:3010/services/aibotservice`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }

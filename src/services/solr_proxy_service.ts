@@ -8,6 +8,8 @@ export class SolrProxyService extends BaseService {
       case 'development':
       case 'local':
         return `https://solr-proxy-staging.eu-west-1.${this.baseDomain}`;
+      case 'test':
+        return `https://localhost:3010/services/solrproxy`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }
