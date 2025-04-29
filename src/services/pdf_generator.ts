@@ -1,4 +1,3 @@
-import exp from 'constants';
 import BaseService from './base_service.js';
 
 export interface noteHighlight {
