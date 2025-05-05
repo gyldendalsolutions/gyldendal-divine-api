@@ -7,6 +7,7 @@ export class UserSettingsBase extends BaseService {
         return `https://user-settings-service.services.${this.baseDomain}`;
       case 'development':
       case 'local':
+      case 'testing':
         return `https://staging-user-settings-service.services.${this.baseDomain}`;
       case 'test':
         return `https://localhost:3010/services/usersettingsservice`;

@@ -36,6 +36,7 @@ export class PollyService extends BaseService {
         return `https://appear-polly.services.${this.baseDomain}`;
       case 'development':
       case 'local':
+      case 'testing':
         return `https://staging-appear-polly.services.${this.baseDomain}`;
       case 'test':
         return `https://localhost:3010/services/polly`;
