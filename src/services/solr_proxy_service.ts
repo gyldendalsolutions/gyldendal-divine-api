@@ -7,6 +7,7 @@ export class SolrProxyService extends BaseService {
         return `https://solr-proxy.eu-west-1.${this.baseDomain}`;
       case 'development':
       case 'local':
+      case 'testing':
         return `https://solr-proxy-staging.eu-west-1.${this.baseDomain}`;
       case 'test':
         return `https://localhost:3010/services/solrproxy`;

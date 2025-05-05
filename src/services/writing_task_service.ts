@@ -7,6 +7,7 @@ export class WritingTaskService extends BaseService {
         return `https://writingtask.services.${this.baseDomain}`;
       case 'development':
       case 'local':
+      case 'testing':
         return `https://staging-writingtask.services.${this.baseDomain}`;
       case 'test':
         return `https://localhost:3010/services/writingtask`;

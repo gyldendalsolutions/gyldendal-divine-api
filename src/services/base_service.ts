@@ -34,7 +34,7 @@ export class BaseService {
     this.bearerToken = bearerToken;
     this.apiKey = apiKey;
     this.serviceUrl = serviceUrl;
-    this.environment = environment;
+    this.environment = environment.toLowerCase();
     this.myAccountId = myAccountId;
     this.baseDomain = baseDomain;
   }
