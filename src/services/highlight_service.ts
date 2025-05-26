@@ -52,16 +52,17 @@ export interface HighlightSearchResponse {
 }
 
 export interface HighlightResponse extends HighlightRequest {
-    debugHostname: string
-    uidIsbnPidMyAccountIdPartitionKey: string;
-    timestampSortKey: number;
-    timeToDie: number;
-    pid: number;
-    uid: string;
-    myAccountid: string;
-    commentText: string;
-    breadCrumb: string;
-    quote: string;
+  debugHostname: string;
+  uidIsbnPidMyAccountIdPartitionKey: string;
+  timestampSortKey: number;
+  timeToDie: number;
+  pid: number;
+  uid: string;
+  myAccountid: string;
+  commentText: string;
+  quote: string;
+  hlcolor: string;
+  isbn: string;
 }
 
 export interface HighlightUpdate {
