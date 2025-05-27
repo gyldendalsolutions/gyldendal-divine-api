@@ -13,11 +13,12 @@ export interface HighlightRanges {
 }
 
 export interface Highlight extends HighlightUpdate {
-    id: string;
-    recreationdata?: IRecreationData;
-    ranges?: HighlightRanges[];
-    createdTStamp?: number;
-    lang?: string;
+  id: string;
+  recreationdata?: IRecreationData;
+  ranges?: HighlightRanges[];
+  lang?: string;
+  markedupText?: string;
+  createdtstamp?: number;
 }
 
 export interface HighlightRequest {
