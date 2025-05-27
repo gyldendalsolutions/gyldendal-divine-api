@@ -13,11 +13,12 @@ export interface HighlightRanges {
 }
 
 export interface Highlight extends HighlightUpdate {
-    id: string;
-    recreationObject?: object;
-    ranges?: HighlightRanges[];
-    createdTStamp?: number;
-    lang?: string;
+  id: string;
+  recreationdata?: IRecreationData;
+  ranges?: HighlightRanges[];
+  lang?: string;
+  markedupText?: string;
+  createdtstamp?: number;
 }
 
 export interface HighlightRequest {
@@ -52,16 +53,17 @@ export interface HighlightSearchResponse {
 }
 
 export interface HighlightResponse extends HighlightRequest {
-    debugHostname: string
-    uidIsbnPidMyAccountIdPartitionKey: string;
-    timestampSortKey: number;
-    timeToDie: number;
-    pid: number;
-    uid: string;
-    myAccountid: string;
-    commentText: string;
-    breadCrumb: string;
-    quote: string;
+  debugHostname: string;
+  uidIsbnPidMyAccountIdPartitionKey: string;
+  timestampSortKey: number;
+  timeToDie: number;
+  pid: number;
+  uid: string;
+  myAccountid: string;
+  commentText: string;
+  quote: string;
+  hlcolor: string;
+  isbn: string;
 }
 
 export interface HighlightUpdate {
@@ -90,6 +92,61 @@ export interface HighlightAddResult extends HighlightUpdateResponse {
 
 export interface HighlightUpdateResponse {
     status: string;
+}
+
+interface IBKNGData {
+  prev20TextContent?: string | null;
+  next20TextContent?: string;
+  cid?: number;
+  isPageNote?: boolean;
+  domPath?: string;
+  newElementPath?: string;
+  elementPath?: string;
+  prevNextTextContent?: {
+    before: string | null;
+    after: string;
+    srcText: string | null;
+  };
+}
+
+export interface ICtype {
+  SiblingsCount: string; // e.g. '15'
+  classes: string; // e.g.  'csc-default csc-textpic'
+}
+
+export interface ICtypeDict {
+  [cid: string]: ICtype;
+}
+
+export interface ITextStartEndObject {
+  startSelectedText: string | undefined | null; // start of selection, text value
+  endSelectedText: string | undefined; // end of selection, text value '150.000';
+}
+
+export interface IRecreationData {
+  startCID: number; // id of section start, e.g. 'c319'
+  numberOfSiblingsOnStartNode?: number | undefined; // sibling count adjacent to the start node, e.g. '5'
+  numberofPrevSiblingsOnCIDStartNode?: number | undefined; // e.g. '1';
+  startCtypes?: ICtypeDict | null | undefined; // this was never used....
+
+  endCID: number;
+  numberOfSiblingsOnEndNode?: number | undefined;
+  numberofPrevSiblingsOnCIDEndNode?: number | undefined;
+  endCTypes?: ICtypeDict | null | undefined; // this was never used ....
+
+  startSelectionInnerText?: string | null | undefined; // inner html (text) of the start node that was selected
+  endSelectionInnerText?: string | null | undefined; // inner html (text) of the end node that was selected
+
+  mathObject?: string | null | undefined; // e.g. '0'. who knows?
+
+  selectedTextStartAndEndObject?: ITextStartEndObject | undefined; // not really used in the old client
+
+  totalSiblingsToCIDs?: number | undefined; // e.g. '15'
+
+  ibkngData?: IBKNGData | null | undefined;
+
+  specialSelectedText?: string | undefined;
+  source?: any | null | undefined;
 }
 
 export class HighlightService extends BaseService {
