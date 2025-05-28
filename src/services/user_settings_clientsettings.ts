@@ -96,7 +96,7 @@ export class UserSettingsClientSettings extends UserSettingsBase {
         return response.json();
     } catch (Error) {
       if (Error instanceof HTTPError && Error.response.status === 404) {
-        return {} as ClientSettingsResponse;
+        return {settings: {}} as ClientSettingsResponse;
       } else {
         throw HTTPError;
       }
