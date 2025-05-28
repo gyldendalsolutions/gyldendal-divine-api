@@ -1,10 +1,13 @@
 import UserSettingsBase from './user_settings_base.js';
 import {HTTPError} from './base_service.js'
 
+export interface ClientSettingsResponse {
+  settings: ClientSettings;
+}
 export interface ClientSettings {
   readabilities?: Readability;
   darkMode?: boolean;
-  displayMode?: string;
+  displayMode?: DisplayModeOption;
   enableKeyboardShortcuts?: boolean;
   showBookmarks?: boolean;
   showNoteHighlights?: boolean;
@@ -12,15 +15,19 @@ export interface ClientSettings {
   readAloudStore?: ReadAloudStore;
   leftDrawerWidth?: number;
   recentSearches?: string[];
-  materialListImagesView?: string;
+  materialListImagesView?: LayoutView;
   frontPageSections?: FrontPageSection[];
   activePublicationFilters?: ActivePublicationFilters;
-  cardsView?: string;
-  cardsSorting?: string;
-  foldersView?: string;
-  foldersSorting?: string;
+  cardsView?: LayoutView;
+  cardsSorting?: SortOptions;
+  foldersView?: LayoutView;
+  foldersSorting?: SortOptions;
   onboardingPromptTime?: string;
 }
+
+export type DisplayModeOption = 'light' | 'dark' | 'system';
+
+export type LayoutView = 'list' | 'grid';
 
 export interface ActivePublicationFilters {
   educations?: string[];
@@ -34,26 +41,26 @@ export interface Readability {
   letterSpacing?: number;
   lineHeight?: number;
   textSize?: number;
-  fontFamily?: fontFamily;
+  fontFamily?: FontFamily;
 }
 
-export interface fontFamily {
+export interface FontFamily {
   name?: string;
   defaultSize?: string;
   url?: string;
 }
 
 export interface ReadAloudStore {
-  currentVoiceSelection?: currentVoiceSelection;
-  currentSpeedSelection?: currentSpeedSelection;
+  currentVoiceSelection?: CurrentVoiceSelection;
+  currentSpeedSelection?: CurrentSpeedSelection;
 }
 
-export interface currentSpeedSelection {
+export interface CurrentSpeedSelection {
   speed?: number;
   text?: string;
 }
 
-export interface currentVoiceSelection {
+export interface CurrentVoiceSelection {
   voice?: number;
   gender?: number;
   language?: number;
@@ -67,6 +74,9 @@ export interface FrontPageSection {
   position?: number;
 }
 
+export type SortOptions = 'recent' | 'alphabetical';
+
+
 export class UserSettingsClientSettings extends UserSettingsBase {
   async getSettings(
     {
@@ -77,7 +87,7 @@ export class UserSettingsClientSettings extends UserSettingsBase {
       isbn: string,
       timeout?: number
     }
-  ): Promise<ClientSettings> {
+  ): Promise<ClientSettingsResponse> {
     const url = `${this.getUrlPrefix()}/clientsettings/isbn/${isbn}`;
     const headers: HeadersInit = new Headers();
 
@@ -86,7 +96,7 @@ export class UserSettingsClientSettings extends UserSettingsBase {
         return response.json();
     } catch (Error) {
       if (Error instanceof HTTPError && Error.response.status === 404) {
-        return {} as ClientSettings;
+        return {} as ClientSettingsResponse;
       } else {
         throw HTTPError;
       }
@@ -104,7 +114,7 @@ export class UserSettingsClientSettings extends UserSettingsBase {
       settings: ClientSettings,
       timeout?: number
     }
-  ): Promise<ClientSettings> {
+  ): Promise<ClientSettingsResponse> {
     const url = `${this.getUrlPrefix()}/clientsettings/isbn/${isbn}`;
     const headers: HeadersInit = new Headers();
 

@@ -1,20 +1,21 @@
 import BaseService from './base_service.js';
 
-export interface noteHighlight {
+export interface NoteHighlight {
     color: string;
     comment: string;
     selectedText: string;
 }
 
-export interface notes {
+export interface Notes {
     created: string;
-    highlight: noteHighlight;
+    highlight: NoteHighlight;
     link: string;
     pid: string;
     title: string;
+    id: string;
 }
 
-export interface notesLabels {
+export interface NotesLabels {
     amountOfNotesProse: string;
     documentTitle: string;
     markedText: string;
@@ -24,30 +25,30 @@ export interface notesLabels {
     yourNote: string;
 }
 
-export interface notesData {
-    labels: notesLabels
-    notes: notes[]
+export interface NotesData {
+    labels: NotesLabels
+    notes: Notes[]
 }
 
-export interface notesRequest {
+export interface NotesRequest {
     exportedDate: string;
-    notesData: notesData;
+    notesData: NotesData;
     userId: string;
     userName: string;
 }
 
-export interface response {
+export interface Response {
     status: string;
     url: string;
 }
 
-export interface writingTaskRequest {
+export interface WritingTaskRequest {
     pdftitle: string;
     userId: string;
     userName: string;
 }
 
-export interface writingTaskData {
+export interface WritingTaskData {
     createdData: string;
     exportedDateTimeString: string;
     header: string;
@@ -57,10 +58,10 @@ export interface writingTaskData {
     publisher: string;
     siteTitle: string;
     userIdentity: string;
-    writingTaskItems: writingTaskItem[];
+    writingTaskItems: WritingTaskItem[];
 }
 
-export interface writingTaskItem {
+export interface WritingTaskItem {
     answer: string;
     crdate: number;
     cruser_id: number;
@@ -81,13 +82,13 @@ export interface writingTaskItem {
     userAnswered: boolean;
 }
 
-export interface siteMapLabels {
+export interface SiteMapLabels {
     pbook: string;
     toc: string;
 }
 
-export interface siteMapPageTreeItem {
-    chapterInfo?: siteMapPageTreeItem;
+export interface SiteMapPageTreeItem {
+    chapterInfo?: SiteMapPageTreeItem;
     characters: number;
     iPages: number;
     images: number;
@@ -105,8 +106,8 @@ export interface siteMapPageTreeItem {
     words: number;
 }
 
-export interface siteMapPage {
-    children: siteMapPage[];
+export interface SiteMapPage {
+    children: SiteMapPage[];
     accessGranted: boolean;
     author: null|string;
     description: null|string;
@@ -122,17 +123,17 @@ export interface siteMapPage {
     uid: number;
 }
 
-export type siteMapPageTreeData = Record<string, siteMapPageTreeItem>;
+export type SiteMapPageTreeData = Record<string, SiteMapPageTreeItem>;
 
-export interface siteMapContent {
-    labels: siteMapLabels,
-    pageTreeData: siteMapPageTreeData,
-    pages: siteMapPage[]
+export interface SiteMapContent {
+    labels: SiteMapLabels,
+    pageTreeData: SiteMapPageTreeData,
+    pages: SiteMapPage[]
 }
 
-export interface siteMapRequest {
+export interface SiteMapRequest {
     baseUrl: string;
-    content: siteMapContent,
+    content: SiteMapContent,
     exportedDate: string;
     isbn: string;
     siteTitle: string;
@@ -162,10 +163,10 @@ export class PdfGeneratorService extends BaseService {
       timeout = 3000
     }:
     {
-      body: siteMapRequest,
+      body: SiteMapRequest,
       timeout?: number
     }
-  ): Promise<response> {
+  ): Promise<Response> {
     const url = `${this.getUrlPrefix()}/sitemap`;
 
     const headers: HeadersInit = new Headers();
@@ -181,10 +182,10 @@ export class PdfGeneratorService extends BaseService {
       timeout = 3000
     }:
     {
-      body: writingTaskRequest,
+      body: WritingTaskRequest,
       timeout?: number
     }
-  ): Promise<response> {
+  ): Promise<Response> {
     const url = `${this.getUrlPrefix()}/writingTask`;
 
     const headers: HeadersInit = new Headers();
@@ -200,10 +201,10 @@ export class PdfGeneratorService extends BaseService {
       timeout = 3000
     }:
     {
-      body: notesRequest,
+      body: NotesRequest,
       timeout?: number
     }
-  ): Promise<response> {
+  ): Promise<Response> {
     const url = `${this.getUrlPrefix()}/notes`;
 
     const headers: HeadersInit = new Headers();
