@@ -225,6 +225,9 @@ export class HighlightService extends BaseService {
     const headers: HeadersInit = new Headers();
 
     const response = await this.getAsync({url, headers, timeout});
+    if (response.status === 204) {
+      return [];
+    } 
     return response.json();
   }
 
@@ -246,6 +249,9 @@ export class HighlightService extends BaseService {
     const headers: HeadersInit = new Headers();
 
     const response = await this.getAsync({url, headers, timeout});
+    if (response.status === 204) {
+      return [];
+    } 
     return response.json();
   }
 
