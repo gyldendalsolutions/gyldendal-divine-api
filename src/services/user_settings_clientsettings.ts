@@ -24,6 +24,7 @@ export interface ClientSettings {
   foldersSorting?: SortOptions;
   onboardingPromptTime?: string;
   showOnboardingPrompt?: boolean;
+  favoritesSorting?: SortOptions;
 }
 
 export type DisplayModeOption = 'light' | 'dark' | 'system';
