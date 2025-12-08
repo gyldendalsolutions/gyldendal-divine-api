@@ -389,11 +389,11 @@ export class QuizService extends BaseService {
       case 'production':
         return 'https://api.iquiz.dk/api';
       case 'development':
+      case 'local':
+      case 'testing':
         return 'https://galecms.test.tibalo.dk/api';
-        case 'local':
-        return `http://localhost:4000`;
       case 'test':
-        return `https://localhost:3010/services/gale`;
+        return `https://localhost:3010/galeapi/api`;
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }
@@ -723,8 +723,6 @@ export class QuizService extends BaseService {
   }): Promise<{ SharedQuizzes: SharedTeacherQuiz[] }> {
     const url = `${this.getUrlPrefix()}/shared/teacher/quizzes`;
     const headers = this.makeHeaders(extraHeaders);
-
-    console.log('[QuizService] getTeachersQuizzes - url:', url);
 
     const res = await this.getAsync({ url, headers, timeout });
     return await res.json();
