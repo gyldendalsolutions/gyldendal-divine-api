@@ -384,6 +384,21 @@ export type QuizLocalState = {
 
 
 export class QuizService extends BaseService {
+  discoverUrlPrefix(): string {
+    switch (this.environment) {
+      case 'production':
+        return 'https://api.iquiz.dk/api';
+      case 'development':
+        return 'https://galecms.test.tibalo.dk/api';
+        case 'local':
+        return `http://localhost:4000`;
+      case 'test':
+        return `https://localhost:3010/services/gale`;
+      default:
+        throw new Error(`Unknown environment: ${this.environment}`);
+    }
+  }
+ 
   private makeHeaders(extra?: Record<string, string>): Headers {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
