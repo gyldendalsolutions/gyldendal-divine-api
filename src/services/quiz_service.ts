@@ -703,7 +703,7 @@ export class QuizService extends BaseService {
 
     const res =
       method === 'PATCH'
-        ? await this.postAsync({
+        ? await this.patchAsync({
             url,
             headers,
             body: null,

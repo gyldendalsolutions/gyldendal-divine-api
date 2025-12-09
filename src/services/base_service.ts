@@ -136,6 +136,26 @@ export class BaseService {
     return await this.callAsync({ url, body: null, method, headers, addAuthHeaders, timeout });
   }
 
+  async patchAsync(
+    {
+      url,
+      headers,
+      addAuthHeaders = true,
+      body,
+      timeout
+    }:
+    {
+      url: URL | string,
+      headers: Headers | undefined | null,
+      addAuthHeaders?: boolean,
+      body: string | null | undefined,
+      timeout: number
+    }
+  ): Promise<Response> {
+    const method = 'PATCH';
+    return await this.callAsync({ url, body, method, headers, addAuthHeaders, timeout });
+  } 
+
   async callAsync(
     {
       url,
