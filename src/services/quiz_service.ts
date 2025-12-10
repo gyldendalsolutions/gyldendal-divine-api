@@ -1,22 +1,7 @@
 import BaseService from './base_service.js';
 
-export enum ApiErrors {
-  OVERVIEW_NOT_FOUND = 'Quiz overview not found',
-  NOT_FOUND = 'Quiz not found',
-  ARCHIVED = 'This shared quiz session is archived',
-  GALE_USER_DATA_CLIENT_ERROR = 'Failed to fetch Gale user data: Client error'
-}
-
 export interface QuizStartResponse {
   quizUnitId: number;
-}
-
-export interface QuizApiError {
-  response: {
-    _data: {
-      Error: ApiErrors;
-    };
-  };
 }
 
 export interface Quiz {
@@ -110,6 +95,7 @@ export interface Answer {
   answerOptions?: AnswerIcon[];
   questionId?: number;
   answerBins?: AnswerBins[];
+  index?: number;
 }
 
 export interface WordOptions {
@@ -154,11 +140,13 @@ export interface Dropdown {
   option: string;
   isCorrect: boolean;
   position?: number;
+  index?: number;
 }
 
 export interface DropdownFormattedOption {
   answerId: number;
   options: Dropdown[];
+  originalOptions: Dropdown[];
 }
 
 export interface TableData {
@@ -418,16 +406,16 @@ export class QuizService extends BaseService {
 
   async checkActiveSession({
     isbn,
-    quizNumber,
+    quiz,
     extraHeaders,
     timeout = 3000
   }: {
     isbn: string;
-    quizNumber: number;
+    quiz: number;
     extraHeaders?: Record<string, string>;
     timeout?: number;
   }): Promise<QuizStartResponse> {
-    const url = `${this.getUrlPrefix()}/isbn/${isbn}/quiz/${quizNumber}`;
+    const url = `${this.getUrlPrefix()}/isbn/${isbn}/quiz/${quiz}`;
     const headers = this.makeHeaders(extraHeaders);
 
     const res = await this.getAsync({ url, headers, timeout });
