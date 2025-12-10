@@ -95,6 +95,7 @@ export interface Answer {
   answerOptions?: AnswerIcon[];
   questionId?: number;
   answerBins?: AnswerBins[];
+  index?: number;
 }
 
 export interface WordOptions {
@@ -139,11 +140,13 @@ export interface Dropdown {
   option: string;
   isCorrect: boolean;
   position?: number;
+  index?: number;
 }
 
 export interface DropdownFormattedOption {
   answerId: number;
   options: Dropdown[];
+  originalOptions: Dropdown[];
 }
 
 export interface TableData {
