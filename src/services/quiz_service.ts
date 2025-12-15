@@ -369,6 +369,8 @@ export type QuizLocalState = {
   showAdvancedResults: boolean;
 };
 
+const REQUEST_TIMEOUT = 10000; // 10 seconds
+
 
 
 export class QuizService extends BaseService {
@@ -408,7 +410,7 @@ export class QuizService extends BaseService {
     isbn,
     quiz,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     isbn: string;
     quiz: number;
@@ -427,7 +429,7 @@ export class QuizService extends BaseService {
     quiz,
     shared,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     isbn: string;
     quiz: number;
@@ -450,7 +452,7 @@ export class QuizService extends BaseService {
     quizUnitId,
     shared,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     isbn: string;
     quizUnitId: number;
@@ -472,7 +474,7 @@ export class QuizService extends BaseService {
     quizUnitId,
     questionID,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     isbn: string;
     quizUnitId: number;
@@ -499,7 +501,7 @@ export class QuizService extends BaseService {
     answer,
     shared,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     isbn: string;
     quizUnitId: number;
@@ -529,7 +531,7 @@ export class QuizService extends BaseService {
     quizUnitId,
     shared,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     isbn: string;
     quizUnitId: number;
@@ -558,7 +560,7 @@ export class QuizService extends BaseService {
     quizUnitId,
     shared,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     isbn: string;
     quizUnitId: number;
@@ -583,7 +585,7 @@ export class QuizService extends BaseService {
   async createSharedQuiz({
     quizData,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     quizData: SharedQuizData;
     extraHeaders?: Record<string, string>;
@@ -607,7 +609,7 @@ export class QuizService extends BaseService {
     quizData,
     action,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     quizSessionId: number;
     quizData: SharedQuizData;
@@ -640,7 +642,7 @@ export class QuizService extends BaseService {
   async getTeachersQuizProblems({
     quizSessionId,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     quizSessionId: number;
     extraHeaders?: Record<string, string>;
@@ -657,7 +659,7 @@ export class QuizService extends BaseService {
     quizSessionId,
     quizUnitId,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     quizSessionId: number;
     quizUnitId: number;
@@ -676,7 +678,7 @@ export class QuizService extends BaseService {
     questionId,
     activate,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     quizSessionId: string;
     questionId: number;
@@ -704,7 +706,7 @@ export class QuizService extends BaseService {
 
   async getTeachersQuizzes({
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     extraHeaders?: Record<string, string>;
     timeout?: number;
@@ -718,7 +720,7 @@ export class QuizService extends BaseService {
 
   async getStudentsQuizzes({
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     extraHeaders?: Record<string, string>;
     timeout?: number;
@@ -733,7 +735,7 @@ export class QuizService extends BaseService {
   async getTeachersQuiz({
     quizSessionId,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     quizSessionId: string;
     extraHeaders?: Record<string, string>;
@@ -750,7 +752,7 @@ export class QuizService extends BaseService {
     quizSessionId,
     archive,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     quizSessionId: string;
     archive: boolean;
@@ -779,7 +781,7 @@ export class QuizService extends BaseService {
     quizSessionId,
     quizUnitId,
     extraHeaders,
-    timeout = 10000
+    timeout = REQUEST_TIMEOUT
   }: {
     quizSessionId: string;
     quizUnitId: string;
