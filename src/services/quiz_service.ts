@@ -408,7 +408,7 @@ export class QuizService extends BaseService {
     isbn,
     quiz,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     isbn: string;
     quiz: number;
@@ -427,7 +427,7 @@ export class QuizService extends BaseService {
     quiz,
     shared,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     isbn: string;
     quiz: number;
@@ -450,7 +450,7 @@ export class QuizService extends BaseService {
     quizUnitId,
     shared,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     isbn: string;
     quizUnitId: number;
@@ -472,7 +472,7 @@ export class QuizService extends BaseService {
     quizUnitId,
     questionID,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     isbn: string;
     quizUnitId: number;
@@ -499,7 +499,7 @@ export class QuizService extends BaseService {
     answer,
     shared,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     isbn: string;
     quizUnitId: number;
@@ -529,7 +529,7 @@ export class QuizService extends BaseService {
     quizUnitId,
     shared,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     isbn: string;
     quizUnitId: number;
@@ -558,7 +558,7 @@ export class QuizService extends BaseService {
     quizUnitId,
     shared,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     isbn: string;
     quizUnitId: number;
@@ -583,7 +583,7 @@ export class QuizService extends BaseService {
   async createSharedQuiz({
     quizData,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     quizData: SharedQuizData;
     extraHeaders?: Record<string, string>;
@@ -607,7 +607,7 @@ export class QuizService extends BaseService {
     quizData,
     action,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     quizSessionId: number;
     quizData: SharedQuizData;
@@ -640,7 +640,7 @@ export class QuizService extends BaseService {
   async getTeachersQuizProblems({
     quizSessionId,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     quizSessionId: number;
     extraHeaders?: Record<string, string>;
@@ -657,7 +657,7 @@ export class QuizService extends BaseService {
     quizSessionId,
     quizUnitId,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     quizSessionId: number;
     quizUnitId: number;
@@ -676,7 +676,7 @@ export class QuizService extends BaseService {
     questionId,
     activate,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     quizSessionId: string;
     questionId: number;
@@ -704,7 +704,7 @@ export class QuizService extends BaseService {
 
   async getTeachersQuizzes({
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     extraHeaders?: Record<string, string>;
     timeout?: number;
@@ -718,7 +718,7 @@ export class QuizService extends BaseService {
 
   async getStudentsQuizzes({
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     extraHeaders?: Record<string, string>;
     timeout?: number;
@@ -733,7 +733,7 @@ export class QuizService extends BaseService {
   async getTeachersQuiz({
     quizSessionId,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     quizSessionId: string;
     extraHeaders?: Record<string, string>;
@@ -750,7 +750,7 @@ export class QuizService extends BaseService {
     quizSessionId,
     archive,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     quizSessionId: string;
     archive: boolean;
@@ -779,7 +779,7 @@ export class QuizService extends BaseService {
     quizSessionId,
     quizUnitId,
     extraHeaders,
-    timeout = 3000
+    timeout = 10000
   }: {
     quizSessionId: string;
     quizUnitId: string;
