@@ -31,11 +31,7 @@ export interface Question {
   description: string;
   freeText: string;
   scores?: Score;
-  answerBins: {
-    binindex: number;
-    img: Mediafile;
-    txt: string;
-  }[];
+  answerBins: AnswerBins[];
   tokenized: Tokens[];
   'chosenAnswer correctness': string;
 }
@@ -75,7 +71,7 @@ export interface ChosenAnswer {
 export interface AnswerBins {
   txt: string;
   binindex: number;
-  img: Mediafile;
+  mediafile: Mediafile;
 }
 
 export interface Answer {
