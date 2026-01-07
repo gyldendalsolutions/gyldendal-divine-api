@@ -1,6 +1,6 @@
 export class HTTPError extends Error {
   public response: Response;
-  
+
   constructor(message: string, response: Response) {
     super();
     this.message = message;
@@ -22,15 +22,15 @@ export class BaseService {
     serviceUrl = undefined,
     environment = 'production',
     myAccountId = 'SYSTIMEMYACCOUNT',
-    baseDomain = 'systime.dk',
-  } : {
-      bearerToken?: string,
-      apiKey?: string,
-      serviceUrl?: string,
-      environment: string,
-      myAccountId: string,
-      baseDomain?: string
-    }) {
+    baseDomain = 'systime.dk'
+  }: {
+    bearerToken?: string;
+    apiKey?: string;
+    serviceUrl?: string;
+    environment: string;
+    myAccountId: string;
+    baseDomain?: string;
+  }) {
     this.bearerToken = bearerToken;
     this.apiKey = apiKey;
     this.serviceUrl = serviceUrl;
@@ -48,7 +48,7 @@ export class BaseService {
     if (this.serviceUrl) {
       return this.serviceUrl;
     }
-    return this.discoverUrlPrefix()
+    return this.discoverUrlPrefix();
   }
 
   public async addAuthHeaders(requestHeaders: Headers): Promise<Headers> {
@@ -60,120 +60,137 @@ export class BaseService {
     return requestHeaders;
   }
 
-  async getAsync(
-    {
-      url,
-      headers,
-      addAuthHeaders = true,
-      timeout
-    }:
-    {
-      url: URL | string,
-      headers: Headers | undefined | null,
-      addAuthHeaders?: boolean,
-      timeout: number
-    }
-  ): Promise<Response> {
+  async getAsync({
+    url,
+    headers,
+    addAuthHeaders = true,
+    timeout
+  }: {
+    url: URL | string;
+    headers: Headers | undefined | null;
+    addAuthHeaders?: boolean;
+    timeout: number;
+  }): Promise<Response> {
     const method = 'GET';
-    return await this.callAsync({ url, body: null, method, headers, addAuthHeaders, timeout });
+    return await this.callAsync({
+      url,
+      body: null,
+      method,
+      headers,
+      addAuthHeaders,
+      timeout
+    });
   }
 
-  async putAsync(
-    {
-      url,
-      headers,
-      addAuthHeaders = true,
-      body,
-      timeout
-    }:
-    {
-      url: URL | string,
-      headers: Headers | undefined | null,
-      addAuthHeaders?: boolean,
-      body: string | null | undefined,
-      timeout: number
-    }
-  ): Promise<Response> {
+  async putAsync({
+    url,
+    headers,
+    addAuthHeaders = true,
+    body,
+    timeout
+  }: {
+    url: URL | string;
+    headers: Headers | undefined | null;
+    addAuthHeaders?: boolean;
+    body: string | null | undefined;
+    timeout: number;
+  }): Promise<Response> {
     const method = 'PUT';
-    return await this.callAsync({ url, body, method, headers, addAuthHeaders, timeout });
-  }
-
-  async postAsync(
-    {
-      url,
-      headers,
-      addAuthHeaders = true,
-      body,
-      timeout
-    }:
-    {
-      url: URL | string,
-      headers: Headers | undefined | null,
-      addAuthHeaders?: boolean,
-      body: string | null | undefined,
-      timeout: number
-    }
-  ): Promise<Response> {
-    const method = 'POST';
-    return await this.callAsync({ url, body, method, headers, addAuthHeaders, timeout });
-  }
-
-  async deleteAsync(
-    {
-      url,
-      headers,
-      addAuthHeaders = true,
-      timeout
-    }:
-    {
-      url: URL | string,
-      headers: Headers | undefined | null,
-      addAuthHeaders?: boolean,
-      timeout: number
-    }
-  ): Promise<Response> {
-    const method = 'DELETE';
-    return await this.callAsync({ url, body: null, method, headers, addAuthHeaders, timeout });
-  }
-
-  async patchAsync(
-    {
-      url,
-      headers,
-      addAuthHeaders = true,
-      body,
-      timeout
-    }:
-    {
-      url: URL | string,
-      headers: Headers | undefined | null,
-      addAuthHeaders?: boolean,
-      body: string | null | undefined,
-      timeout: number
-    }
-  ): Promise<Response> {
-    const method = 'PATCH';
-    return await this.callAsync({ url, body, method, headers, addAuthHeaders, timeout });
-  } 
-
-  async callAsync(
-    {
+    return await this.callAsync({
       url,
       body,
       method,
       headers,
-      timeout,
-      addAuthHeaders
-    }:
-    {
-      url: URL | string,
-      body: string | null | undefined,
-      method: string,
-      headers: Headers | undefined | null,
-      timeout: number,
-      addAuthHeaders?: boolean,
-    }
-  ): Promise<Response> {
+      addAuthHeaders,
+      timeout
+    });
+  }
+
+  async postAsync({
+    url,
+    headers,
+    addAuthHeaders = true,
+    body,
+    timeout
+  }: {
+    url: URL | string;
+    headers: Headers | undefined | null;
+    addAuthHeaders?: boolean;
+    body: string | null | undefined;
+    timeout: number;
+  }): Promise<Response> {
+    const method = 'POST';
+    return await this.callAsync({
+      url,
+      body,
+      method,
+      headers,
+      addAuthHeaders,
+      timeout
+    });
+  }
+
+  async deleteAsync({
+    url,
+    headers,
+    addAuthHeaders = true,
+    timeout
+  }: {
+    url: URL | string;
+    headers: Headers | undefined | null;
+    addAuthHeaders?: boolean;
+    timeout: number;
+  }): Promise<Response> {
+    const method = 'DELETE';
+    return await this.callAsync({
+      url,
+      body: null,
+      method,
+      headers,
+      addAuthHeaders,
+      timeout
+    });
+  }
+
+  async patchAsync({
+    url,
+    headers,
+    addAuthHeaders = true,
+    body,
+    timeout
+  }: {
+    url: URL | string;
+    headers: Headers | undefined | null;
+    addAuthHeaders?: boolean;
+    body: string | null | undefined;
+    timeout: number;
+  }): Promise<Response> {
+    const method = 'PATCH';
+    return await this.callAsync({
+      url,
+      body,
+      method,
+      headers,
+      addAuthHeaders,
+      timeout
+    });
+  }
+
+  async callAsync({
+    url,
+    body,
+    method,
+    headers,
+    timeout,
+    addAuthHeaders
+  }: {
+    url: URL | string;
+    body: string | null | undefined;
+    method: string;
+    headers: Headers | undefined | null;
+    timeout: number;
+    addAuthHeaders?: boolean;
+  }): Promise<Response> {
     if (!headers) {
       headers = new Headers();
     }
@@ -190,7 +207,10 @@ export class BaseService {
     });
 
     if (!response.ok) {
-		throw new HTTPError(`Got ${response.status} while calling ${response.url}`, response);
+      throw new HTTPError(
+        `Got ${response.status} while calling ${response.url}`,
+        response
+      );
     }
     return response;
   }
