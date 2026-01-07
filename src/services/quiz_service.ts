@@ -763,7 +763,7 @@ export class QuizService extends BaseService {
     const res =
       method === 'DELETE'
         ? await this.deleteAsync({ url, headers, timeout })
-        : await this.postAsync({
+        : await this.patchAsync({
             url,
             headers,
             body: null,
