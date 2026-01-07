@@ -1,0 +1,25 @@
+{
+  "repositories": {
+    "private-packagist": {
+      "type": "composer",
+      "url": "https://repo.packagist.com/gud/",
+      "canonical": false
+    },
+    "packagist.org": false
+  },
+  "name": "gyldendalas/gyldendal-divine-api",
+  "type": "divine-api",
+  "description": "",
+  "homepage": "https://github.com/gyldendalsolutions/gyldendal-divine-api",
+  "require-dev": {
+    "systime/git_hooks": "^12.0"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || python3 ./vendor/systime/git_hooks/githooks/mono_repos/addhooks-vue-fe.py"
+    ],
+    "post-update-cmd": [
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || python3 ./vendor/systime/git_hooks/githooks/mono_repos/addhooks-vue-fe.py"
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "00484b023ce5a881ab34f293b715583a",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "systime/git_hooks",
+            "version": "12.1.3",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:gyldendalsolutions/git_hooks.git",
+                "reference": "4d1927120c9e2e4713091c8f85173adf001132be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gyldendalsolutions/git_hooks/zipball/4d1927120c9e2e4713091c8f85173adf001132be",
+                "reference": "4d1927120c9e2e4713091c8f85173adf001132be",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://repo.packagist.com/gud/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "notification-url": "https://repo.packagist.com/gud/downloads/",
+            "scripts": {
+                "post-scripts": [
+                    "Composer\\Config::disableProcessTimeout",
+                    "[ $COMPOSER_DEV_MODE -eq 0 ] || python3 ./githooks/mono_repos/addhooks-git-hooks-repo.py"
+                ],
+                "post-install-cmd": [
+                    "@post-scripts"
+                ],
+                "post-update-cmd": [
+                    "@post-scripts"
+                ]
+            },
+            "description": "Git hooks for bundles and mono repositories",
+            "support": {
+                "source": "https://github.com/gyldendalsolutions/git_hooks/tree/12.1.3",
+                "issues": "https://github.com/gyldendalsolutions/git_hooks/issues"
+            },
+            "time": "2025-02-13T10:49:21+00:00"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
+}
