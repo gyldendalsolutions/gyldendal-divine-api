@@ -7,3 +7,7 @@ dist/
 # Composer
 vendor/
 .DS_Store
+
+# Local environment files
+.env
+event.json
