@@ -367,8 +367,6 @@ export type QuizLocalState = {
 
 const REQUEST_TIMEOUT = 10000; // 10 seconds
 
-
-
 export class QuizService extends BaseService {
   discoverUrlPrefix(): string {
     switch (this.environment) {
@@ -384,7 +382,7 @@ export class QuizService extends BaseService {
         throw new Error(`Unknown environment: ${this.environment}`);
     }
   }
- 
+
   private makeHeaders(extra?: Record<string, string>): Headers {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

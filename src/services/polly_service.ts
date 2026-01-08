@@ -5,7 +5,7 @@ export enum SSMLSpeechSpeeds {
   SLOW = 2,
   MEDIUM = 3,
   FAST = 4,
-  X_FAST = 5,
+  X_FAST = 5
 }
 
 export type SpeechmarkEvent = {
@@ -14,12 +14,12 @@ export type SpeechmarkEvent = {
   value: string;
   start?: number;
   end?: number;
-}
+};
 
 export interface SynthesisResponse {
-    mp3url: string;
-    s3: string[];
-    SpeechMarks?: SpeechmarkEvent[];
+  mp3url: string;
+  s3: string[];
+  SpeechMarks?: SpeechmarkEvent[];
 }
 
 export interface SynthesisRequest {
@@ -43,24 +43,26 @@ export class PollyService extends BaseService {
       default:
         throw new Error(`Unknown environment: ${this.environment}`);
     }
-  };
+  }
 
-  async synthesize(
-    {
-      body,
-      timeout = 3000
-    }:
-    {
-      body: SynthesisRequest,
-      timeout?: number
-    }
-  ): Promise<SynthesisResponse> {
+  async synthesize({
+    body,
+    timeout = 3000
+  }: {
+    body: SynthesisRequest;
+    timeout?: number;
+  }): Promise<SynthesisResponse> {
     const url = `${this.getUrlPrefix()}/synthesizeSpeech`;
 
     const headers: HeadersInit = new Headers();
 
-    headers.append('Content-Type', "application/json");
-    const response = await this.postAsync({url, headers, body: JSON.stringify(body), timeout});
+    headers.append('Content-Type', 'application/json');
+    const response = await this.postAsync({
+      url,
+      headers,
+      body: JSON.stringify(body),
+      timeout
+    });
     return response.json();
   }
 }

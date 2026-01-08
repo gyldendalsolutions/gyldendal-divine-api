@@ -13,5 +13,5 @@ export * from 'services/ai_bot_service.js';
 export * from 'services/quiz_service.js';
 
 // Discovery only services
-export * from 'services/writing_task_service.js'
-export * from 'services/solr_proxy_service.js'
+export * from 'services/writing_task_service.js';
+export * from 'services/solr_proxy_service.js';

@@ -1,30 +1,26 @@
 import UserSettingsBase from './user_settings_base.js';
-import {HTTPError} from './base_service.js'
+import { HTTPError } from './base_service.js';
 
 export interface Continue extends ContinueUpdate {
-    createdTimeStamp?: number;
+  createdTimeStamp?: number;
 }
 
 export interface ContinueUpdate {
-    pageId: number;
+  pageId: number;
 }
 
 export class UserSettingsContinue extends UserSettingsBase {
-  async setContinue(
-    {
-      isbn,
-      pageId,
-      externalUserId,
-      timeout = 5000
-    }:
-    {
-      isbn: string,
-      pageId: number,
-      externalUserId?: string,
-      timeout?: number
-    }
-  ): Promise<Continue> {
-
+  async setContinue({
+    isbn,
+    pageId,
+    externalUserId,
+    timeout = 5000
+  }: {
+    isbn: string;
+    pageId: number;
+    externalUserId?: string;
+    timeout?: number;
+  }): Promise<Continue> {
     const continueBody: ContinueUpdate = {
       pageId
     };
@@ -36,45 +32,43 @@ export class UserSettingsContinue extends UserSettingsBase {
     }
 
     headers.set('Content-Type', 'application/json');
-    const response = await this.putAsync({url, headers, body: JSON.stringify(continueBody), timeout});
+    const response = await this.putAsync({
+      url,
+      headers,
+      body: JSON.stringify(continueBody),
+      timeout
+    });
     return response.json();
-
   }
 
-  async deleteContinue(
-    {
-      isbn,
-      timeout = 5000
-    }:
-    {
-      isbn: string,
-      timeout?: number
-    }
-  ): Promise<void> {
+  async deleteContinue({
+    isbn,
+    timeout = 5000
+  }: {
+    isbn: string;
+    timeout?: number;
+  }): Promise<void> {
     const url = `${this.getUrlPrefix()}/continue/isbn/${isbn}`;
     const headers: HeadersInit = new Headers();
 
-    await this.deleteAsync({url, headers, timeout});
-    return
+    await this.deleteAsync({ url, headers, timeout });
+    return;
   }
 
-  async getContinue(
-    {
-      isbn,
-      timeout = 5000
-    }:
-    {
-      isbn: string,
-      timeout?: number
-    }
-  ): Promise<Continue> {
+  async getContinue({
+    isbn,
+    timeout = 5000
+  }: {
+    isbn: string;
+    timeout?: number;
+  }): Promise<Continue> {
     let url = `${this.getUrlPrefix()}/continue/isbn/${isbn}`;
 
     const headers: HeadersInit = new Headers();
 
     try {
-        const response = await this.getAsync({url, headers, timeout});
-        return response.json();
+      const response = await this.getAsync({ url, headers, timeout });
+      return response.json();
     } catch (Error) {
       if (Error instanceof HTTPError && Error.response.status === 404) {
         return {} as Continue;
@@ -83,7 +77,6 @@ export class UserSettingsContinue extends UserSettingsBase {
       }
     }
   }
-
 }
 
 export default UserSettingsContinue;
