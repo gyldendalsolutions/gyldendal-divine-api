@@ -267,8 +267,8 @@ export interface SharedQuizData {
 
 export interface SharedQuizBase {
   quizUnitId?: number;
-  quizSessionId: number;
-  name: string;
+  quizSessionId?: number;
+  name?: string;
   isArchived?: boolean;
   quizResultAvailable?: number | null;
   problems: number;
