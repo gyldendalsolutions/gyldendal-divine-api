@@ -265,27 +265,32 @@ export interface SharedQuizData {
   'extra-teachers': string[];
 }
 
-export interface SharedTeacherQuiz {
+export interface SharedQuizBase {
+  quizUnitId?: number;
+  quizSessionId?: number;
+  name?: string;
+  isArchived?: boolean;
+  quizResultAvailable?: number | null;
+  problems: number;
+}
+
+export interface SharedTeacherQuiz extends SharedQuizBase {
   createdAt?: number;
   deactivatedProblems?: number[];
   extraTeachers?: string[];
-  isArchived?: boolean;
   isExtraTeacher?: boolean;
   isPinned?: boolean;
-  name?: string;
-  problems: number;
-  quizSessionId?: number;
   studentsFinished?: number;
 }
 
-export interface SharedStudentQuiz {
-  quizUnitId: number;
-  quizSessionId: number;
-  name: string;
+export interface SharedStudentQuiz extends SharedQuizBase {
   createdBy: string;
   startedAt: number | null;
   finishedAt: number | null;
+  opensAt: number | null;
+  closesAt: number | null;
   finished: boolean;
+  description?: string;
 }
 
 export interface CalculatedScore {
