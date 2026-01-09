@@ -266,11 +266,11 @@ export interface SharedQuizData {
 }
 
 export interface SharedQuizBase {
-  quizUnitId: number;
+  quizUnitId?: number;
   quizSessionId: number;
   name: string;
   isArchived?: boolean;
-  quizResultAvailable: number | null;
+  quizResultAvailable?: number | null;
   problems: number;
 }
 
