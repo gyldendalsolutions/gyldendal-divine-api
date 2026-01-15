@@ -344,6 +344,11 @@ export interface ProblemScore {
   score: Score;
 }
 
+export interface ProblemField {
+  value: string | null;
+  status: ProblemAnswerState;
+}
+
 export type QuizTableAction = 'copy' | 'archive' | 'delete' | 'unarchive';
 export type QuizTableItem =
   | SharedTeacherQuiz
