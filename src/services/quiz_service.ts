@@ -714,7 +714,7 @@ export class QuizService extends BaseService {
   }: {
     extraHeaders?: Record<string, string>;
     timeout?: number;
-  }): Promise<{ SharedQuizzes: SharedTeacherQuiz[] }> {
+  }): Promise<SharedTeacherQuiz[]> {
     const url = `${this.getUrlPrefix()}/shared/teacher/quizzes`;
     const headers = this.makeHeaders(extraHeaders);
 
