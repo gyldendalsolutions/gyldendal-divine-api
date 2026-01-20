@@ -57,7 +57,7 @@ export interface ChosenAnswer {
   id: number | number[];
   answerText: string;
   created?: number;
-  position: number;
+  position: number | number[];
   mediafile: Mediafile;
   bins?: number[];
   bin?: number;
