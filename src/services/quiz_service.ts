@@ -51,6 +51,7 @@ export interface Mediafile {
   extension: string;
   mimeType: string;
   credit: string;
+  width?: number;
 }
 
 export interface ChosenAnswer {
