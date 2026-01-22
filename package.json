@@ -2,7 +2,7 @@
   "name": "@gyldendalas/gyldendal-divine-api",
   "type": "module",
   "scripts": {
-    "package": "tsup"
+    "build": "tsup"
   },
   "dependencies": {
     "uuid": "^11.1.0"
