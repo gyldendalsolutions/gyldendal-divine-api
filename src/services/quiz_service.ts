@@ -34,6 +34,7 @@ export interface Question {
   answerBins: AnswerBins[];
   tokenized: Tokens[];
   'chosenAnswer correctness': string;
+  isEnabled: boolean;
 }
 
 export interface FormattedQuestion extends Question {
@@ -284,14 +285,31 @@ export interface SharedTeacherQuiz extends SharedQuizBase {
   studentsFinished?: number;
 }
 
+export interface FormattedSharedTeacherQuiz extends SharedTeacherQuiz {
+  formattedCreatedAt?: string | null;
+  formattedProblemsAmount?: number | null;
+}
+
+export interface SharedQuizCreatedByUserInfo {
+  eKeysUserId: string;
+  email: string;
+  name: string;
+  myAccountId: string;
+}
+
 export interface SharedStudentQuiz extends SharedQuizBase {
-  createdBy: string;
+  createdBy: SharedQuizCreatedByUserInfo;
   startedAt: number | null;
   finishedAt: number | null;
   opensAt: number | null;
   closesAt: number | null;
   finished: boolean;
   description?: string;
+}
+
+export interface FormattedSharedStudentQuiz extends SharedStudentQuiz {
+  formattedStartedAt?: string | null;
+  formattedFinishedAt?: string | null;
 }
 
 export interface CalculatedScore {
@@ -375,6 +393,14 @@ export type QuizLocalState = {
   instantFeedback: string | null;
   showAdvancedResults: boolean;
 };
+
+export interface QuizDescriptionData {
+  quizName: string;
+  quizDescription: string;
+  questionsCount: number;
+  opensAt: number | null;
+  closesAt: number | null;
+}
 
 const REQUEST_TIMEOUT = 10000; // 10 seconds
 
@@ -647,13 +673,15 @@ export class QuizService extends BaseService {
   async getTeachersQuizProblems({
     quizSessionId,
     extraHeaders,
-    timeout = REQUEST_TIMEOUT
+    timeout = REQUEST_TIMEOUT,
+    includeDisabled = false
   }: {
     quizSessionId: number;
     extraHeaders?: Record<string, string>;
     timeout?: number;
+    includeDisabled?: boolean;
   }): Promise<Quiz> {
-    const url = `${this.getUrlPrefix()}/shared/teacher/quizzes/${quizSessionId}/problems`;
+    const url = `${this.getUrlPrefix()}/shared/teacher/quizzes/${quizSessionId}/problems?includeDisabled=${includeDisabled}`;
     const headers = this.makeHeaders(extraHeaders);
 
     const res = await this.getAsync({ url, headers, timeout });
