@@ -673,7 +673,7 @@ export class QuizService extends BaseService {
     quizSessionId,
     extraHeaders,
     timeout = REQUEST_TIMEOUT,
-    includeDisabled = true
+    includeDisabled = false
   }: {
     quizSessionId: number;
     extraHeaders?: Record<string, string>;
