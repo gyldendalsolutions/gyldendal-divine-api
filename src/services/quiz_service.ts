@@ -664,16 +664,14 @@ export class QuizService extends BaseService {
     quizSessionId,
     quizUnitId,
     extraHeaders,
-    timeout = REQUEST_TIMEOUT,
-    includeDisabled
+    timeout = REQUEST_TIMEOUT
   }: {
     quizSessionId: number;
     quizUnitId: number;
     extraHeaders?: Record<string, string>;
     timeout?: number;
-    includeDisabled?: boolean;
   }): Promise<QuizResult> {
-    const url = `${this.getUrlPrefix()}/shared/teacher/quizzes/${quizSessionId}/units/${quizUnitId}?includeDisabled=${includeDisabled}`;
+    const url = `${this.getUrlPrefix()}/shared/teacher/quizzes/${quizSessionId}/units/${quizUnitId}`;
     const headers = this.makeHeaders(extraHeaders);
 
     const res = await this.getAsync({ url, headers, timeout });
