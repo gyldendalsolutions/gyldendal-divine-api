@@ -51,6 +51,7 @@ export interface Mediafile {
   extension: string;
   mimeType: string;
   credit: string;
+  width?: number;
 }
 
 export interface ChosenAnswer {
@@ -663,14 +664,16 @@ export class QuizService extends BaseService {
     quizSessionId,
     quizUnitId,
     extraHeaders,
-    timeout = REQUEST_TIMEOUT
+    timeout = REQUEST_TIMEOUT,
+    includeDisabled
   }: {
     quizSessionId: number;
     quizUnitId: number;
     extraHeaders?: Record<string, string>;
     timeout?: number;
+    includeDisabled?: boolean;
   }): Promise<QuizResult> {
-    const url = `${this.getUrlPrefix()}/shared/teacher/quizzes/${quizSessionId}/units/${quizUnitId}`;
+    const url = `${this.getUrlPrefix()}/shared/teacher/quizzes/${quizSessionId}/units/${quizUnitId}?includeDisabled=${includeDisabled}`;
     const headers = this.makeHeaders(extraHeaders);
 
     const res = await this.getAsync({ url, headers, timeout });
