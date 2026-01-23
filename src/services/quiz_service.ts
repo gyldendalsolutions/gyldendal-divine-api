@@ -233,11 +233,11 @@ export interface TokensDiffCheck {
 
 export interface NewAnswer {
   answerText: string;
-  bins: number[];
-  id: number;
+  bins?: number[];
+  id: number | number[];
   isCorrect: boolean;
-  position: number;
-  questionId: number;
+  position: number | number[];
+  questionId?: number;
 }
 
 export interface SaveAnswerResponse {
