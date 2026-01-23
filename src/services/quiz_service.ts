@@ -287,7 +287,6 @@ export interface SharedTeacherQuiz extends SharedQuizBase {
 
 export interface FormattedSharedTeacherQuiz extends SharedTeacherQuiz {
   formattedCreatedAt?: string | null;
-  formattedProblemsAmount?: number | null;
 }
 
 export interface SharedQuizCreatedByUserInfo {
