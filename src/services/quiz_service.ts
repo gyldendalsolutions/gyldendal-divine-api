@@ -289,7 +289,7 @@ export interface FormattedSharedTeacherQuiz extends SharedTeacherQuiz {
   formattedCreatedAt?: string | null;
 }
 
-export interface SharedQuizCreatedByUserInfo {
+export interface SharedQuizUserInfo {
   eKeysUserId: string;
   email: string;
   name: string;
@@ -297,7 +297,7 @@ export interface SharedQuizCreatedByUserInfo {
 }
 
 export interface SharedStudentQuiz extends SharedQuizBase {
-  createdBy: SharedQuizCreatedByUserInfo;
+  createdBy: SharedQuizUserInfo;
   startedAt: number | null;
   finishedAt: number | null;
   opensAt: number | null;
@@ -330,8 +330,7 @@ export interface QuizSession extends SharedTeacherQuiz {
 
 export interface QuizUnit {
   quizUnitId: number;
-  studentId: number;
-  studentEkeysId: string;
+  student: SharedQuizUserInfo;
   finished: boolean;
   finishedAt: number | null;
   startedAt: number | null;
@@ -353,6 +352,7 @@ export interface FormattedQuizUnit extends QuizUnit {
   formattedStartedAt?: string | null;
   percentage?: string;
   total?: string;
+  [key: `problem_${string}`]: ProblemField | null | undefined;
 }
 
 export interface ProblemScore {
