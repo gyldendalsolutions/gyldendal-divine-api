@@ -172,16 +172,7 @@ export interface QuizResult {
     problems: number;
     quizSessionId: number;
   };
-  QuizUnit?: {
-    averageScore: number;
-    finished: boolean;
-    finishedAt: number | null;
-    quizUnitId: number;
-    startedAt: number | null;
-    studentEkeysId: string;
-    studentId: number;
-    timeSpent: number;
-  };
+  QuizUnit?: Omit<QuizUnit, 'unitScore' | 'problemScores'>;
   Results: Results;
 }
 
