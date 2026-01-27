@@ -352,7 +352,7 @@ export interface FormattedQuizUnit extends QuizUnit {
   formattedStartedAt?: string | null;
   percentage?: string;
   total?: string;
-  [key: `problem_${string}`]: ProblemField;
+  [key: `problem_${string}`]: ProblemField | null | undefined;
 }
 
 export interface ProblemScore {
