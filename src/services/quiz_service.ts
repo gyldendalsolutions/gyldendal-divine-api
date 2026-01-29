@@ -9,7 +9,7 @@ export interface Quiz {
   quizName: string;
   quizDescription: string;
   quizFinished: boolean;
-  questions: Question[];
+  questions?: Question[];
   quizDeadline?: number;
   quizResultAvailable?: number;
   quizStartTime?: number;
