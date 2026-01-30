@@ -19,6 +19,7 @@ export interface Question {
   questionId: number;
   name: string;
   introText: string;
+  displayName: string;
   caseSensitive?: boolean;
   shuffle: boolean;
   answerChecked: boolean;
