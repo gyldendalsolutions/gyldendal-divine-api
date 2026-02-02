@@ -393,6 +393,8 @@ export interface QuizDescriptionData {
   closesAt: number | null;
 }
 
+export type QuizFormType = 'copy' | 'edit' | 'create';
+
 const REQUEST_TIMEOUT = 10000; // 10 seconds
 
 export class QuizService extends BaseService {
