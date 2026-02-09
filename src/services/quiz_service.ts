@@ -648,7 +648,7 @@ export class QuizService extends BaseService {
   }: {
     quizSessionId: number;
     quizData: SharedQuizData;
-    action: Omit<QuizFormType, 'create'>;
+    action: Exclude<QuizFormType, 'create'>;
     extraHeaders?: Record<string, string>;
     timeout?: number;
   }): Promise<QuizFormResponse> {
