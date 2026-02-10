@@ -395,6 +395,17 @@ export interface QuizDescriptionData {
 
 export type QuizFormType = 'copy' | 'edit' | 'create';
 
+export interface QuizFormError {
+  Error: string;
+  InvalidEmails?: string[];
+}
+
+export interface QuizFormSuccess {
+  quizSessionId: number;
+}
+
+export type QuizFormResponse = QuizFormSuccess | QuizFormError;
+
 const REQUEST_TIMEOUT = 10000; // 10 seconds
 
 export class QuizService extends BaseService {
@@ -614,7 +625,7 @@ export class QuizService extends BaseService {
     quizData: SharedQuizData;
     extraHeaders?: Record<string, string>;
     timeout?: number;
-  }): Promise<{ quizSessionId: number }> {
+  }): Promise<QuizFormResponse> {
     const url = `${this.getUrlPrefix()}/shared/quiz`;
     const headers = this.makeHeaders(extraHeaders);
 
@@ -637,10 +648,10 @@ export class QuizService extends BaseService {
   }: {
     quizSessionId: number;
     quizData: SharedQuizData;
-    action: 'edit' | 'copy';
+    action: Exclude<QuizFormType, 'create'>;
     extraHeaders?: Record<string, string>;
     timeout?: number;
-  }): Promise<{ quizSessionId: number }> {
+  }): Promise<QuizFormResponse> {
     const url = `${this.getUrlPrefix()}/shared/quiz/${quizSessionId}`;
     const method = action === 'edit' ? 'PUT' : 'POST';
     const headers = this.makeHeaders(extraHeaders);
