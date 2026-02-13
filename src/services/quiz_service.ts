@@ -613,15 +613,15 @@ export class QuizService extends BaseService {
   // ─────────────────────────────────────────────────────────────
 
   async addSharedQuiz({
-    quiz,
+    quizSessionId,
     extraHeaders,
     timeout = REQUEST_TIMEOUT
   }: {
-    quiz: number;
+    quizSessionId: number;
     extraHeaders?: Record<string, string>;
     timeout?: number;
   }): Promise<QuizStartResponse> {
-    const url = `${this.getUrlPrefix()}/shared/student/${quiz}`;
+    const url = `${this.getUrlPrefix()}/shared/student/${quizSessionId}`;
     const headers = this.makeHeaders(extraHeaders);
 
     const res = await this.postAsync({ url, headers, body: '{}', timeout });
@@ -629,19 +629,18 @@ export class QuizService extends BaseService {
   }
 
   async setQuizStartTime({
-    quiz,
+    quizUnitId,
     extraHeaders,
     timeout = REQUEST_TIMEOUT
   }: {
-    quiz: number;
+    quizUnitId: number;
     extraHeaders?: Record<string, string>;
     timeout?: number;
-  }): Promise<string> {
-    const url = `${this.getUrlPrefix()}/shared/student/${quiz}/start`;
+  }): Promise<void> {
+    const url = `${this.getUrlPrefix()}/shared/student/${quizUnitId}/start`;
     const headers = this.makeHeaders(extraHeaders);
 
-    const res = await this.putAsync({ url, headers, body: '{}', timeout });
-    return await res.json();
+    await this.putAsync({ url, headers, body: '{}', timeout });
   }
 
   async createSharedQuiz({
