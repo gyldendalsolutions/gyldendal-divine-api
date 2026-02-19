@@ -230,6 +230,7 @@ export interface NewAnswer {
   isCorrect: boolean;
   position: number | number[];
   questionId?: number;
+  index?: number;
 }
 
 export interface SaveAnswerResponse {
