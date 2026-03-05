@@ -12,6 +12,7 @@ export interface ClientSettings {
   showBookmarks?: boolean;
   showNoteHighlights?: boolean;
   featureGalleryVersion?: number;
+  highlightsSorting?: HighlightsSorting;
   readAloudStore?: ReadAloudStore;
   leftDrawerWidth?: number;
   recentSearches?: string[];
@@ -77,6 +78,8 @@ export interface FrontPageSection {
 }
 
 export type SortOptions = 'recent' | 'alphabetical';
+
+export type HighlightsSorting = 'newest' | 'chapters';
 
 export class UserSettingsClientSettings extends UserSettingsBase {
   async getSettings({
