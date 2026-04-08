@@ -17,7 +17,6 @@
     "dist",
     "package.json"
   ],
-  "packageManager": "pnpm@10.33.0",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.js"
