@@ -5,7 +5,7 @@
     "build": "tsup"
   },
   "dependencies": {
-    "uuid": "^11.1.0"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.12.2",
