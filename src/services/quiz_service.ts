@@ -415,6 +415,7 @@ export class QuizService extends BaseService {
       case 'production':
         return 'https://api.iquiz.dk/api';
       case 'development':
+        return 'https://galecms.qa.tibalo.dk/api';
       case 'local':
       case 'testing':
         return 'https://galecms.test.tibalo.dk/api';
