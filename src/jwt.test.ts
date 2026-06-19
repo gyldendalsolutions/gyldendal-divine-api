@@ -121,3 +121,31 @@ test('throws when exp is a boolean', () => {
 test('throws when exp is an object', () => {
   assert.throws(() => getJwtExpiry(makeToken({ exp: {} })), /must be a number/);
 });
+
+// ── exp range errors ──────────────────────────────────────────────────────────
+
+// ECMAScript Date range: ±8,640,000,000,000,000 ms = ±8,640,000,000,000 s from epoch.
+
+test('accepts exp at the positive Date boundary', () => {
+  const exp = 8_640_000_000_000;
+  assert.deepEqual(getJwtExpiry(makeToken({ exp })), new Date(8_640_000_000_000_000));
+});
+
+test('accepts exp at the negative Date boundary', () => {
+  const exp = -8_640_000_000_000;
+  assert.deepEqual(getJwtExpiry(makeToken({ exp })), new Date(-8_640_000_000_000_000));
+});
+
+test('throws for exp one second beyond the positive boundary', () => {
+  assert.throws(
+    () => getJwtExpiry(makeToken({ exp: 8_640_000_000_001 })),
+    /outside the valid JavaScript Date range/
+  );
+});
+
+test('throws for exp one second beyond the negative boundary', () => {
+  assert.throws(
+    () => getJwtExpiry(makeToken({ exp: -8_640_000_000_001 })),
+    /outside the valid JavaScript Date range/
+  );
+});

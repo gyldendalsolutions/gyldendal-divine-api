@@ -1,3 +1,7 @@
+// ECMAScript maximum Date time value in milliseconds: ±100 million days from epoch.
+// new Date() silently returns Invalid Date for values outside this range.
+const MAX_DATE_MS = 8_640_000_000_000_000;
+
 /**
  * Decodes a base64url-encoded JWT segment (RFC 4648 §5).
  */
@@ -18,33 +22,7 @@ function decodeBase64Url(segment: string): string {
  * The `exp` claim is a NumericDate (Unix timestamp in seconds, per RFC 7519).
  */
 export function getJwtExpiry(token: string): Date {
-  const parts = token.split('.');
-
-  if (parts.length !== 3) {
-    throw new Error(
-      `Invalid JWT: expected 3 dot-separated segments, got ${parts.length}`
-    );
-  }
-
-  const payloadSegment = parts[1];
-
-  if (payloadSegment.length === 0) {
-    throw new Error('Invalid JWT: payload segment is empty');
-  }
-
-  const decoded = decodeBase64Url(payloadSegment);
-
-  let payload: unknown;
-  try {
-    payload = JSON.parse(decoded);
-  } catch {
-    throw new Error('Invalid JWT: payload is not valid JSON');
-  }
-
-  if (typeof payload !== 'object' || payload === null || Array.isArray(payload)) {
-    throw new Error('Invalid JWT: payload must be a JSON object');
-  }
-
+  const payload = extractJWTPayload(token);
   if (!('exp' in payload)) {
     throw new Error('Invalid JWT: payload does not contain an "exp" claim');
   }
@@ -62,5 +40,36 @@ export function getJwtExpiry(token: string): Date {
   }
 
   // JWT NumericDate is seconds since epoch; Date constructor takes milliseconds.
-  return new Date(exp * 1000);
+  const expMs = exp * 1000;
+  if (expMs < -MAX_DATE_MS || expMs > MAX_DATE_MS) {
+    throw new Error(
+      `Invalid JWT: "exp" value (${exp}) is outside the valid JavaScript Date range`
+    );
+  }
+
+  return new Date(expMs);
+}
+
+function extractJWTPayload(token: string): Record<string, unknown> {
+  const parts = token.split('.');
+  if (parts.length !== 3) {
+    throw new Error(
+      `Invalid JWT: expected 3 dot-separated segments, got ${parts.length}`
+    );
+  }
+  const payloadSegment = parts[1];
+  if (payloadSegment.length === 0) {
+    throw new Error('Invalid JWT: payload segment is empty');
+  }
+  const decoded = decodeBase64Url(payloadSegment);
+  let payload: unknown;
+  try {
+    payload = JSON.parse(decoded);
+  } catch {
+    throw new Error('Invalid JWT: payload is not valid JSON');
+  }
+  if (typeof payload !== 'object' || payload === null || Array.isArray(payload)) {
+    throw new Error('Invalid JWT: payload must be a JSON object');
+  }
+  return payload as Record<string, unknown>;
 }
