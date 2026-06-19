@@ -2,7 +2,8 @@
   "name": "@gyldendalas/gyldendal-divine-api",
   "type": "module",
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "test": "node --import tsx/esm --test 'src/**/*.test.ts'"
   },
   "dependencies": {
     "uuid": "^14.0.0"
@@ -10,6 +11,7 @@
   "devDependencies": {
     "@types/node": "^24.12.2",
     "tsup": "^8.5.1",
+    "tsx": "^4.22.4",
     "typescript": "^5.9.3"
   },
   "license": "MIT",
