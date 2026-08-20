@@ -15,6 +15,10 @@
     "typescript": "^5.9.3"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gyldendalsolutions/gyldendal-divine-api.git"
+  },
   "files": [
     "dist",
     "package.json"
