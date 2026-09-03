@@ -9,7 +9,6 @@ export class SolrProxyService extends BaseService {
       case 'testing':
         return `https://solr-proxy-staging.eu-west-1.${this.baseDomain}`;
       case 'local':
-        // Local instance (solr-proxy; its uvicorn default 8000 is taken by tagging locally).
         return `http://localhost:8090`;
       case 'test':
         return `https://localhost:3010/services/solrproxy`;

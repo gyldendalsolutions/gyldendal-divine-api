@@ -21,7 +21,6 @@ export class TaggingService extends BaseService {
       case 'testing':
         return `https://staging-tagging.services.${this.baseDomain}`;
       case 'local':
-        // Local instance (tagging-service, uvicorn default).
         return `http://localhost:8000`;
       case 'test':
         return `https://localhost:3010/services/tagging`;

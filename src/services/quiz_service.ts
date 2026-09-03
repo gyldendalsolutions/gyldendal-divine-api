@@ -416,7 +416,6 @@ export class QuizService extends BaseService {
         return 'https://api.iquiz.dk/api';
       case 'development':
       case 'testing':
-      // No local Gale CMS exists; a local installation uses the shared test instance.
       case 'local':
         return 'https://galecms.test.tibalo.dk/api';
       case 'test':
