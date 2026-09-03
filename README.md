@@ -19,8 +19,8 @@ constructor (the `installationpurpose` of the TYPO3 installation), unless
 
 `local` is for running the services yourself while developing. Ports follow
 each service's own development setup where one exists, and avoid the ports
-the frontends already use locally (3000-3002 nuxt, 3010 mock server, 8001
-DynamoDB admin).
+the frontends and sibling services already use locally (3000-3002 nuxt, 3010
+mock server, 8000/8100 DynamoDB local, 8001 DynamoDB admin).
 
 | service | local URL | source of the port |
 |---|---|---|
@@ -30,8 +30,8 @@ DynamoDB admin).
 | writing task | `http://localhost:5000` | `systime_sso` local service block |
 | AI bot | `http://localhost:3100` | `ai-bot-service` main.py |
 | cookie consent log | `http://localhost:1337` | `cookie_consent_service` docker-compose |
-| tagging | `http://localhost:8000` | `tagging-service` uvicorn default |
-| solr proxy | `http://localhost:8090` | chosen; its uvicorn default 8000 is taken by tagging |
+| tagging | `http://localhost:8010` | chosen; its uvicorn default 8000 is taken by user settings' local DynamoDB |
+| solr proxy | `http://localhost:8090` | chosen; its uvicorn default 8000 is taken by user settings' local DynamoDB |
 | polly | `http://localhost:3200` | chosen; its container port 3000 is taken by nuxt dev |
 | quiz (Gale CMS) | `https://galecms.test.tibalo.dk/api` | no local Gale, shared test instance |
 
