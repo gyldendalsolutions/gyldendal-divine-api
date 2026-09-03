@@ -147,9 +147,11 @@ export class PdfGeneratorService extends BaseService {
       case 'production':
         return `https://pdfgenerator.services.${this.baseDomain}`;
       case 'development':
-      case 'local':
       case 'testing':
         return `https://staging-pdfgenerator.services.${this.baseDomain}`;
+      case 'local':
+        // Local instance (pdf_generation_service docker-compose-development).
+        return `http://localhost:3050`;
       case 'test':
         return `https://localhost:3010/services/pdfgenerator`;
       default:

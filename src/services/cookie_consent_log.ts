@@ -24,9 +24,11 @@ export class CookieConsentLog extends BaseService {
       case 'production':
         return `https://cookieconsentlog.services.${this.baseDomain}`;
       case 'development':
-      case 'local':
       case 'testing':
         return `https://staging-cookieconsentlog.services.${this.baseDomain}`;
+      case 'local':
+        // Local instance (cookie_consent_service docker-compose).
+        return `http://localhost:1337`;
       case 'test':
         return `https://localhost:3010/services/cookieconsentlog`;
       default:

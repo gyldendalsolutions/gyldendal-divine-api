@@ -35,9 +35,11 @@ export class PollyService extends BaseService {
       case 'production':
         return `https://appear-polly.services.${this.baseDomain}`;
       case 'development':
-      case 'local':
       case 'testing':
         return `https://staging-appear-polly.services.${this.baseDomain}`;
+      case 'local':
+        // Local instance (systime-appear-polly; container port 3000 is taken by nuxt dev servers locally).
+        return `http://localhost:3200`;
       case 'test':
         return `https://localhost:3010/services/polly`;
       default:
