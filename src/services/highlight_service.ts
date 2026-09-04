@@ -155,9 +155,10 @@ export class HighlightService extends BaseService {
       case 'production':
         return `https://highlights.services.${this.baseDomain}`;
       case 'development':
-      case 'local':
       case 'testing':
         return `https://staging-highlights.services.${this.baseDomain}`;
+      case 'local':
+        return `http://localhost:3030`;
       case 'test':
         return `https://localhost:3010/services/highlight`;
       default:

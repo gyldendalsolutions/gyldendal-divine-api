@@ -53,9 +53,10 @@ export class AIBotService extends BaseService {
       case 'production':
         return `https://ai-bot-service.eu-west-1.${this.baseDomain}`;
       case 'development':
-      case 'local':
       case 'testing':
         return `https://ai-bot-service-staging.eu-west-1.${this.baseDomain}`;
+      case 'local':
+        return `http://localhost:3100`;
       case 'test':
         return `https://localhost:3010/services/aibotservice`;
       default:
