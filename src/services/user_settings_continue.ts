@@ -69,11 +69,11 @@ export class UserSettingsContinue extends UserSettingsBase {
     try {
       const response = await this.getAsync({ url, headers, timeout });
       return response.json();
-    } catch (Error) {
-      if (Error instanceof HTTPError && Error.response.status === 404) {
+    } catch (error) {
+      if (error instanceof HTTPError && error.response.status === 404) {
         return {} as Continue;
       } else {
-        throw HTTPError;
+        throw error;
       }
     }
   }
