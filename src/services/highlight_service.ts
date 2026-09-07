@@ -6,8 +6,10 @@ export enum HighlightResultType {
 }
 
 export interface HighlightRanges {
-  start: number | null;
-  end: number | null;
+  /** XPath of the start node, e.g. "/div[2]/div[1]/p[3]". */
+  start: string | null;
+  /** XPath of the end node. */
+  end: string | null;
   startOffset: number;
   endOffset: number;
 }
