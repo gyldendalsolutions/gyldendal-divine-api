@@ -71,25 +71,43 @@ export interface WritingTaskData {
   writingTaskItems: WritingTaskItem[];
 }
 
+/**
+ * One task on the export. Callers pass the TYPO3 rows they hold, so only the
+ * fields the export actually reads are described here and none are required:
+ * the template renders the parsed pair, the title and whether the task was
+ * answered, and the controller builds the images from the gallery.
+ *
+ * `gallery` and `images` are left open because their shapes come from the
+ * caller's own content model, and the export walks them defensively.
+ */
 export interface WritingTaskItem {
-  answer: string;
-  crdate: number;
-  cruser_id: number;
-  deleted: number;
-  files: string[] | null;
-  hidden: number;
-  imageorient: number;
-  parentid: number;
-  parenttable: string;
-  parsedAnswer: string;
-  parsedQuestion: string;
-  pid: number;
-  question: string;
-  sorting: number;
-  title: string;
-  tstamp: number;
-  uid: number;
-  userAnswered: boolean;
+  /** Rendered by the export; derive it from `answer` before sending. */
+  parsedAnswer?: string;
+  /** Rendered by the export; derive it from `question` before sending. */
+  parsedQuestion?: string;
+  title?: string;
+  userAnswered?: boolean;
+  /** Read for `position`, and for `rows[].columns[]` when building images. */
+  gallery?: unknown;
+  /** Filled in by the export from the gallery; senders may omit it. */
+  images?: unknown;
+  /** Only compared against zero, so a count or a list both work. */
+  files?: number | string[] | null;
+  answer?: string;
+  question?: string;
+  // Row bookkeeping the export does not read, in either spelling.
+  crdate?: number;
+  cruserId?: number;
+  cruser_id?: number;
+  deleted?: boolean | number;
+  hidden?: boolean | number;
+  imageorient?: number;
+  parentid?: number;
+  parenttable?: string;
+  pid?: number;
+  sorting?: number;
+  tstamp?: number;
+  uid?: number;
 }
 
 export interface SiteMapLabels {

@@ -1,7 +1,7 @@
 import { test, describe, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { PdfGeneratorService } from './pdf_generator.js';
-import type { SiteMapPage } from './pdf_generator.js';
+import type { SiteMapPage, WritingTaskItem } from './pdf_generator.js';
 
 const realFetch = globalThis.fetch;
 
@@ -129,3 +129,48 @@ describe('the request types match what the export reads', () => {
     assert.ok(sent?.body.writingTaskData);
   });
 });
+
+describe('a writing task item takes the row the caller holds', () => {
+  test('a TYPO3 row from the reader satisfies the type', () => {
+    // The shape ibog keeps per task: booleans for the flags, a count for
+    // files, its own gallery model, and the parsed pair filled in before
+    // sending.
+    const row = {
+      answer: 'raw answer',
+      crdate: 1_700_000_000,
+      cruserId: 42,
+      deleted: false,
+      files: 0,
+      gallery: { position: 1, rows: {} },
+      hidden: false,
+      imageorient: 0,
+      images: null,
+      parentid: 9394,
+      parenttable: 'tt_content',
+      parsedAnswer: 'parsed answer',
+      parsedQuestion: 'parsed question',
+      pid: 9394,
+      question: 'raw question',
+      sorting: 256,
+      title: 'Opgave 1',
+      tstamp: 1_700_000_001,
+      uid: 7,
+      userAnswered: true
+    };
+
+    const item: WritingTaskItem = row;
+
+    assert.equal(item.parsedAnswer, 'parsed answer');
+    assert.equal(item.files, 0);
+  });
+
+  test('an item carrying only what the template renders is enough', () => {
+    const item: WritingTaskItem = {
+      parsedAnswer: 'parsed answer',
+      parsedQuestion: 'parsed question'
+    };
+
+    assert.equal(item.title, undefined);
+  });
+});
+
