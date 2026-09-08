@@ -12,7 +12,8 @@ export interface Notes {
   link: string;
   pid: string;
   title: string;
-  id: string;
+  /** Not read by the export; kept for callers that carry one. */
+  id?: string;
 }
 
 export interface NotesLabels {
@@ -46,10 +47,11 @@ export interface WritingTaskRequest {
   pdftitle: string;
   userId: string;
   userName: string;
+  writingTaskData: WritingTaskData;
 }
 
 export interface WritingTaskData {
-  createdData: string;
+  createdDate: string;
   exportedDateTimeString: string;
   header: string;
   headerStripped: string;
@@ -106,21 +108,26 @@ export interface SiteMapPageTreeItem {
   words: number;
 }
 
+/**
+ * A page in the sitemap export. The template renders `link`, `title`, `uid`
+ * and `children`; everything else is whatever the caller's navigation happens
+ * to carry, so it is optional here.
+ */
 export interface SiteMapPage {
   children: SiteMapPage[];
-  accessGranted: boolean;
-  author: null | string;
-  description: null | string;
-  doktype: number;
-  editor: null | string;
-  fe_group: string;
-  keywords: null | string;
   link: string;
-  nav_hide: number;
-  nav_title: string;
-  pid: number;
   title: string;
   uid: number;
+  accessGranted?: boolean;
+  author?: null | string;
+  description?: null | string;
+  doktype?: number;
+  editor?: null | string;
+  fe_group?: string;
+  keywords?: null | string;
+  nav_hide?: number;
+  nav_title?: string;
+  pid?: number;
 }
 
 export type SiteMapPageTreeData = Record<string, SiteMapPageTreeItem>;
@@ -139,6 +146,42 @@ export interface SiteMapRequest {
   siteTitle: string;
   userId: string;
   userName: string;
+}
+
+export interface PrintGlossary {
+  term: string;
+  description: string;
+}
+
+/**
+ * A content element as the reader hands it over. The export walks
+ * `content.content` for the body text, header, images and position, and the
+ * shapes differ per element type, so this stays open.
+ */
+export interface PrintContentElement {
+  [field: string]: unknown;
+}
+
+/**
+ * Body for the print export. `contentElements` is what gets rendered; the rest
+ * is page furniture. `lang` falls back to Danish server side when absent or
+ * not a plain language code.
+ */
+export interface PrintRequest {
+  contentElements: PrintContentElement[];
+  isbn: string;
+  userId: string;
+  userName: string;
+  baseUrl?: string;
+  copyright?: string;
+  disclaimer?: string;
+  filename?: string;
+  glossaries?: PrintGlossary[];
+  lang?: string;
+  pageTitle?: string;
+  pnLabel?: string;
+  publisher?: string;
+  siteTitle?: string;
 }
 
 export class PdfGeneratorService extends BaseService {
@@ -187,6 +230,27 @@ export class PdfGeneratorService extends BaseService {
     timeout?: number;
   }): Promise<Response> {
     const url = `${this.getUrlPrefix()}/writingTask`;
+
+    const headers: HeadersInit = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+    const response = await this.postAsync({
+      url,
+      headers,
+      body: JSON.stringify(body),
+      timeout
+    });
+    return response.json();
+  }
+
+  async pdfFromPrint({
+    body,
+    timeout = 3000
+  }: {
+    body: PrintRequest;
+    timeout?: number;
+  }): Promise<Response> {
+    const url = `${this.getUrlPrefix()}/print`;
 
     const headers: HeadersInit = new Headers();
 
