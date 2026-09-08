@@ -38,10 +38,18 @@ export interface NotesRequest {
   userName: string;
 }
 
-export interface Response {
+/** What every export answers with: a status and a link to the document. */
+export interface PdfExportResult {
   status: string;
   url: string;
 }
+
+/**
+ * @deprecated Use {@link PdfExportResult}. This name shadows the DOM `Response`
+ * inside this module and for anyone importing it, which reads as though the
+ * exports resolve to a fetch response rather than the parsed body.
+ */
+export type Response = PdfExportResult;
 
 export interface WritingTaskRequest {
   pdftitle: string;
@@ -207,7 +215,7 @@ export class PdfGeneratorService extends BaseService {
   }: {
     body: SiteMapRequest;
     timeout?: number;
-  }): Promise<Response> {
+  }): Promise<PdfExportResult> {
     const url = `${this.getUrlPrefix()}/sitemap`;
 
     const headers: HeadersInit = new Headers();
@@ -228,7 +236,7 @@ export class PdfGeneratorService extends BaseService {
   }: {
     body: WritingTaskRequest;
     timeout?: number;
-  }): Promise<Response> {
+  }): Promise<PdfExportResult> {
     const url = `${this.getUrlPrefix()}/writingTask`;
 
     const headers: HeadersInit = new Headers();
@@ -249,7 +257,7 @@ export class PdfGeneratorService extends BaseService {
   }: {
     body: PrintRequest;
     timeout?: number;
-  }): Promise<Response> {
+  }): Promise<PdfExportResult> {
     const url = `${this.getUrlPrefix()}/print`;
 
     const headers: HeadersInit = new Headers();
@@ -270,7 +278,7 @@ export class PdfGeneratorService extends BaseService {
   }: {
     body: NotesRequest;
     timeout?: number;
-  }): Promise<Response> {
+  }): Promise<PdfExportResult> {
     const url = `${this.getUrlPrefix()}/notes`;
 
     const headers: HeadersInit = new Headers();
