@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "build": "tsdown",
-    "test": "node --import tsx/esm --test 'src/**/*.test.ts'"
+    "test": "node --import tsx/esm --test 'src/**/*.test.ts'",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "uuid": "^14.0.1"
