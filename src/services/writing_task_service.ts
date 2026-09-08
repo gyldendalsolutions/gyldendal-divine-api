@@ -5,6 +5,16 @@ export interface StepwiseTaskDataItem {
   [field: string]: unknown;
 }
 
+/**
+ * The steps of an answer. The service stores whatever it is handed and reads
+ * it back the same way, and the reader keeps them keyed by uid rather than in
+ * a list, so both shapes are allowed here rather than one being imposed on
+ * data that already exists.
+ */
+export type StepwiseTaskData =
+  | StepwiseTaskDataItem[]
+  | Record<string, StepwiseTaskDataItem>;
+
 export interface WritingTaskResponse {
   cid: string;
   createdtime?: number;
@@ -14,7 +24,7 @@ export interface WritingTaskResponse {
   isbn: string;
   myaccountId?: string;
   pid: string;
-  stepwiseTaskDataItems?: StepwiseTaskDataItem[];
+  stepwiseTaskDataItems?: StepwiseTaskData;
   uid?: string;
   userId?: string;
 }
@@ -30,7 +40,7 @@ export interface WritingTaskAnswer {
   cid: string;
   isbn: string;
   pid: string;
-  stepwiseTaskData: StepwiseTaskDataItem[];
+  stepwiseTaskData: StepwiseTaskData;
   dateString?: string;
   mainTitle?: string;
   /** Always empty for a real user; the service stores what it is given. */
