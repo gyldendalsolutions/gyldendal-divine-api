@@ -63,7 +63,7 @@ export class WritingTaskService extends BaseService {
       case 'testing':
         return `https://staging-writingtask.services.${this.baseDomain}`;
       case 'local':
-        return `http://localhost:4140`;
+        return `http://127.0.0.1:4140`;
       case 'test':
         return `https://localhost:3010/services/writingtask`;
       default:
