@@ -4,10 +4,14 @@
     "outDir": "lib",
     "module": "Node16",
     "target": "esnext",
+    "skipLibCheck": true,
     "strict": true,
     "lib": [
       "esnext",
       "dom"
     ]
-  }
+  },
+  "include": [
+    "src"
+  ]
 }

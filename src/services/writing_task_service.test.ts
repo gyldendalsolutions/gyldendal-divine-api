@@ -128,3 +128,24 @@ describe('deleteResponse', () => {
     });
   });
 });
+
+describe('an answer keeps the shape the caller stores', () => {
+  test('steps keyed by uid are sent as they are', async () => {
+    captureRequests(200, {});
+
+    await service().newResponse({
+      userId: 'user-1',
+      answer: {
+        cid: 'c1',
+        isbn: '9788761687050',
+        pid: '9394',
+        stepwiseTaskData: { '42': { uid: 42, answer: 'text' } }
+      }
+    });
+
+    assert.deepEqual(sent?.body.stepwiseTaskData, {
+      '42': { uid: 42, answer: 'text' }
+    });
+  });
+});
+
