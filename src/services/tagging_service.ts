@@ -21,7 +21,7 @@ export class TaggingService extends BaseService {
       case 'testing':
         return `https://staging-tagging.services.${this.baseDomain}`;
       case 'local':
-        return `http://localhost:8010`;
+        return `http://localhost:4160`;
       case 'test':
         return `https://localhost:3010/services/tagging`;
       default:

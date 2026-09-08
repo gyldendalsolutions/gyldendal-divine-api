@@ -11,3 +11,6 @@ vendor/
 # Local environment files
 .env
 event.json
+
+# Local tarball builds used to test unreleased changes in typo3_frontends.
+.local-pack/
