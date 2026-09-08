@@ -39,7 +39,7 @@ is issued for that name.
 | tagging | `http://127.0.0.1:4160` | reserved here; the repo has no development compose yet |
 | AI bot | `http://127.0.0.1:4170` | reserved here; `ai-bot-service` main.py defaults to 3100 |
 | cookie consent log | `http://127.0.0.1:4180` | reserved here; `cookie_consent_service` compose defaults to 1337 |
-| polly | `https://staging-appear-polly.services.systime.dk` | no local polly: synthesis needs AWS credentials, and the local container rejects the `Authorization` header in its CORS preflight |
+| polly | `http://127.0.0.1:3200` | `systime-appear-polly` docker-compose-development; its container port 3000 is taken by nuxt dev. Synthesis needs AWS credentials, and the container's CORS preflight currently rejects the `Authorization` header this SDK sends |
 | quiz (Gale CMS) | `https://galecms.test.tibalo.dk/api` | no local Gale, shared test instance |
 
 Run a service on a different port by passing `serviceUrl` to its constructor.

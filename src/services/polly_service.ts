@@ -36,11 +36,9 @@ export class PollyService extends BaseService {
         return `https://appear-polly.services.${this.baseDomain}`;
       case 'development':
       case 'testing':
-      // Speech synthesis has no local story: it needs AWS Polly credentials,
-      // and the local container's CORS rules reject the Authorization header
-      // this service sends. Local installations use staging.
-      case 'local':
         return `https://staging-appear-polly.services.${this.baseDomain}`;
+      case 'local':
+        return `http://127.0.0.1:3200`;
       case 'test':
         return `https://localhost:3010/services/polly`;
       default:
