@@ -27,11 +27,11 @@ mock server, 8000/8100 DynamoDB local, 8001 DynamoDB admin).
 | highlight | `http://localhost:3030` | `systime_highlight_server` docker-compose-development |
 | user settings | `http://localhost:4000` | `user_settings_service` Dockerfile |
 | pdf generator | `http://localhost:3050` | `pdf_generation_service` docker-compose-development |
-| writing task | `http://localhost:5000` | `systime_sso` local service block |
+| writing task | `http://localhost:4050` | chosen; 5000 is taken by macOS AirPlay Receiver |
 | AI bot | `http://localhost:3100` | `ai-bot-service` main.py |
 | cookie consent log | `http://localhost:1337` | `cookie_consent_service` docker-compose |
-| tagging | `http://localhost:8010` | chosen; its uvicorn default 8000 is taken by user settings' local DynamoDB |
-| solr proxy | `http://localhost:8090` | chosen; its uvicorn default 8000 is taken by user settings' local DynamoDB |
+| tagging | `http://localhost:8010` | chosen; its uvicorn default 8000 collides with the other local services |
+| solr proxy | `http://localhost:8090` | chosen; its uvicorn default 8000 collides with the other local services |
 | polly | `http://localhost:3200` | chosen; its container port 3000 is taken by nuxt dev |
 | quiz (Gale CMS) | `https://galecms.test.tibalo.dk/api` | no local Gale, shared test instance |
 
