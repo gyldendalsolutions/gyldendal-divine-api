@@ -27,7 +27,7 @@ export class CookieConsentLog extends BaseService {
       case 'testing':
         return `https://staging-cookieconsentlog.services.${this.baseDomain}`;
       case 'local':
-        return `http://localhost:1337`;
+        return `http://127.0.0.1:4180`;
       case 'test':
         return `https://localhost:3010/services/cookieconsentlog`;
       default:

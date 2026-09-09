@@ -219,7 +219,7 @@ export class PdfGeneratorService extends BaseService {
       case 'testing':
         return `https://staging-pdfgenerator.services.${this.baseDomain}`;
       case 'local':
-        return `http://localhost:3050`;
+        return `http://127.0.0.1:4130`;
       case 'test':
         return `https://localhost:3010/services/pdfgenerator`;
       default:
