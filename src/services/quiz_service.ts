@@ -425,6 +425,29 @@ export class QuizService extends BaseService {
     }
   }
 
+  /**
+   * Where a mediafile `identifier` is served from. It is the API host without
+   * the `/api` path, except in the mock environment, where the app serves the
+   * fixtures itself and the identifiers are already relative to it.
+   */
+  getMediaUrlPrefix(): string {
+    if (this.serviceUrl) {
+      return new URL(this.serviceUrl).origin;
+    }
+    switch (this.environment) {
+      case 'production':
+        return 'https://api.iquiz.dk';
+      case 'development':
+      case 'testing':
+      case 'local':
+        return 'https://galecms.test.tibalo.dk';
+      case 'test':
+        return '';
+      default:
+        throw new Error(`Unknown environment: ${this.environment}`);
+    }
+  }
+
   private makeHeaders(extra?: Record<string, string>): Headers {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
