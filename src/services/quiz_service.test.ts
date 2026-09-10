@@ -12,11 +12,12 @@ function service(environment: string, serviceUrl?: string): QuizService {
 }
 
 describe('QuizService.getMediaUrlPrefix', () => {
-  // Each row pins both prefixes as literals and then pins the relationship
-  // between them against the implementation, so neither can move alone. Should
-  // an environment ever serve its media from a host of its own, the third
-  // assertion failing is the signal to take that environment out of the table
-  // — not a bug in the test.
+  // The literals are what carry weight here: the media prefix is derived from
+  // `discoverUrlPrefix()`, so the relationship between the two holds by
+  // construction and the third assertion only catches someone reintroducing a
+  // parallel mapping. Should an environment ever serve its media from a host of
+  // its own, that assertion failing is the signal to take the environment out
+  // of the table — not a bug in the test.
   for (const { environment, api, media } of [
     {
       environment: 'development',
@@ -64,6 +65,13 @@ describe('QuizService.getMediaUrlPrefix', () => {
   test('follows an explicit serviceUrl, minus its path', () => {
     assert.equal(
       service('production', 'https://gale.example.invalid/api').getMediaUrlPrefix(),
+      'https://gale.example.invalid'
+    );
+  });
+
+  test('lets an explicit serviceUrl override the mock environment too', () => {
+    assert.equal(
+      service('test', 'https://gale.example.invalid/api').getMediaUrlPrefix(),
       'https://gale.example.invalid'
     );
   });
