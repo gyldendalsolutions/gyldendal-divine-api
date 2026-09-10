@@ -425,6 +425,22 @@ export class QuizService extends BaseService {
     }
   }
 
+  /**
+   * Where a mediafile `identifier` is served from: the API prefix without its
+   * path, so the host mapping stays in `discoverUrlPrefix()` alone and an
+   * explicit `serviceUrl` is honoured the way `getUrlPrefix()` honours it.
+   *
+   * The exception is the mock environment, where the app serves the fixtures
+   * itself and their identifiers are already relative to it — unless a
+   * `serviceUrl` is set, which overrides the environment there as everywhere.
+   */
+  getMediaUrlPrefix(): string {
+    if (!this.serviceUrl && this.environment === 'test') {
+      return '';
+    }
+    return new URL(this.getUrlPrefix()).origin;
+  }
+
   private makeHeaders(extra?: Record<string, string>): Headers {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
