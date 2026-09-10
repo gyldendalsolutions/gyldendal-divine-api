@@ -12,22 +12,53 @@ function service(environment: string, serviceUrl?: string): QuizService {
 }
 
 describe('QuizService.getMediaUrlPrefix', () => {
-  test('is the api host without the /api path', () => {
-    for (const environment of ['development', 'testing', 'local']) {
-      assert.equal(
-        service(environment).getMediaUrlPrefix(),
-        'https://galecms.test.tibalo.dk'
-      );
-      assert.equal(
-        service(environment).discoverUrlPrefix(),
-        'https://galecms.test.tibalo.dk/api'
-      );
+  // Each row pins both prefixes as literals and then pins the relationship
+  // between them against the implementation, so neither can move alone. Should
+  // an environment ever serve its media from a host of its own, the third
+  // assertion failing is the signal to take that environment out of the table
+  // — not a bug in the test.
+  for (const { environment, api, media } of [
+    {
+      environment: 'development',
+      api: 'https://galecms.test.tibalo.dk/api',
+      media: 'https://galecms.test.tibalo.dk'
+    },
+    {
+      environment: 'testing',
+      api: 'https://galecms.test.tibalo.dk/api',
+      media: 'https://galecms.test.tibalo.dk'
+    },
+    {
+      environment: 'local',
+      api: 'https://galecms.test.tibalo.dk/api',
+      media: 'https://galecms.test.tibalo.dk'
+    },
+    {
+      environment: 'production',
+      api: 'https://api.iquiz.dk/api',
+      media: 'https://api.iquiz.dk'
     }
-    assert.equal(service('production').getMediaUrlPrefix(), 'https://api.iquiz.dk');
-  });
+  ]) {
+    test(`${environment}: the media prefix is the api host without the /api path`, () => {
+      const quizService = service(environment);
 
+      assert.equal(quizService.discoverUrlPrefix(), api);
+      assert.equal(quizService.getMediaUrlPrefix(), media);
+      assert.equal(
+        quizService.getMediaUrlPrefix(),
+        new URL(quizService.discoverUrlPrefix()).origin
+      );
+    });
+  }
+
+  // The one environment where the two deliberately part ways: the app serves
+  // the fixtures itself and their identifiers are already relative to it, so a
+  // host would break them.
   test('is empty in the mock environment, where the app serves the media', () => {
-    assert.equal(service('test').getMediaUrlPrefix(), '');
+    const quizService = service('test');
+
+    assert.equal(quizService.discoverUrlPrefix(), 'https://localhost:3010/galeapi/api');
+    assert.equal(quizService.getMediaUrlPrefix(), '');
   });
 
   test('follows an explicit serviceUrl, minus its path', () => {
