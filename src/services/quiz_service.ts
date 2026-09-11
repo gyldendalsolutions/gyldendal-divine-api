@@ -410,6 +410,26 @@ export type QuizFormResponse = QuizFormSuccess | QuizFormError;
 const REQUEST_TIMEOUT = 10000; // 10 seconds
 
 export class QuizService extends BaseService {
+  /**
+   * Mirrors the `galeQaEndpointEnabled` feature flag the frontend reads off
+   * `site.environment.featureflags`: the environments that share the test Gale
+   * installation talk to the QA one instead. Only that one arm of the mapping
+   * moves — `production` and the mock `test` environment are untouched, and an
+   * explicit `serviceUrl` still overrides the flag the way it overrides the
+   * environment.
+   */
+  public galeQaEndpointEnabled: boolean;
+
+  constructor({
+    galeQaEndpointEnabled = false,
+    ...base
+  }: ConstructorParameters<typeof BaseService>[0] & {
+    galeQaEndpointEnabled?: boolean;
+  }) {
+    super(base);
+    this.galeQaEndpointEnabled = galeQaEndpointEnabled;
+  }
+
   discoverUrlPrefix(): string {
     switch (this.environment) {
       case 'production':
@@ -417,7 +437,9 @@ export class QuizService extends BaseService {
       case 'development':
       case 'testing':
       case 'local':
-        return 'https://galecms.test.tibalo.dk/api';
+        return this.galeQaEndpointEnabled
+          ? 'https://galecms.qa.tibalo.dk/api'
+          : 'https://galecms.test.tibalo.dk/api';
       case 'test':
         return `https://localhost:3010/galeapi/api`;
       default:
