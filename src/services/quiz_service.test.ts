@@ -2,12 +2,17 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { QuizService } from './quiz_service.js';
 
-function service(environment: string, serviceUrl?: string): QuizService {
+function service(
+  environment: string,
+  serviceUrl?: string,
+  galeQaEndpointEnabled?: boolean
+): QuizService {
   return new QuizService({
     bearerToken: 'a-token',
     environment,
     myAccountId: 'SYSTIMEMYACCOUNT',
-    serviceUrl
+    serviceUrl,
+    galeQaEndpointEnabled
   });
 }
 
@@ -78,5 +83,60 @@ describe('QuizService.getMediaUrlPrefix', () => {
 
   test('rejects an unknown environment', () => {
     assert.throws(() => service('staging').getMediaUrlPrefix(), /Unknown environment/);
+  });
+});
+
+describe('QuizService.discoverUrlPrefix with galeQaEndpointEnabled', () => {
+  // The flag only moves the Gale installation the non-production environments
+  // point at; the media prefix follows because it is still derived from this
+  // one mapping.
+  for (const environment of ['development', 'testing', 'local']) {
+    test(`${environment}: serves the QA Gale installation`, () => {
+      const quizService = service(environment, undefined, true);
+
+      assert.equal(
+        quizService.discoverUrlPrefix(),
+        'https://galecms.qa.tibalo.dk/api'
+      );
+      assert.equal(
+        quizService.getMediaUrlPrefix(),
+        'https://galecms.qa.tibalo.dk'
+      );
+    });
+  }
+
+  test('leaves production alone', () => {
+    assert.equal(
+      service('production', undefined, true).discoverUrlPrefix(),
+      'https://api.iquiz.dk/api'
+    );
+  });
+
+  test('leaves the mock environment alone', () => {
+    const quizService = service('test', undefined, true);
+
+    assert.equal(
+      quizService.discoverUrlPrefix(),
+      'https://localhost:3010/galeapi/api'
+    );
+    assert.equal(quizService.getMediaUrlPrefix(), '');
+  });
+
+  test('an explicit serviceUrl still wins', () => {
+    assert.equal(
+      service(
+        'development',
+        'https://gale.example.invalid/api',
+        true
+      ).getUrlPrefix(),
+      'https://gale.example.invalid/api'
+    );
+  });
+
+  test('defaults to the test installation when the flag is absent', () => {
+    assert.equal(
+      service('development').discoverUrlPrefix(),
+      'https://galecms.test.tibalo.dk/api'
+    );
   });
 });
