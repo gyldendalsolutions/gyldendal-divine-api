@@ -19,21 +19,7 @@ export interface CookieConsentResponse {
 }
 
 export class CookieConsentLog extends BaseService {
-  discoverUrlPrefix(): string {
-    switch (this.environment) {
-      case 'production':
-        return `https://cookieconsentlog.services.${this.baseDomain}`;
-      case 'development':
-      case 'testing':
-        return `https://staging-cookieconsentlog.services.${this.baseDomain}`;
-      case 'local':
-        return `http://127.0.0.1:4180`;
-      case 'test':
-        return `https://localhost:3010/services/cookieconsentlog`;
-      default:
-        throw new Error(`Unknown environment: ${this.environment}`);
-    }
-  }
+  readonly serviceName = 'cookieConsentLog' as const;
 
   async logCookieConsent({
     body,

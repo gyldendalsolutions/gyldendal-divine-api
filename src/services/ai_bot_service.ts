@@ -48,21 +48,7 @@ export type AIChatCompletionRequest = {
 } & AIChatCompletionOptions;
 
 export class AIBotService extends BaseService {
-  discoverUrlPrefix(): string {
-    switch (this.environment) {
-      case 'production':
-        return `https://ai-bot-service.eu-west-1.${this.baseDomain}`;
-      case 'development':
-      case 'testing':
-        return `https://ai-bot-service-staging.eu-west-1.${this.baseDomain}`;
-      case 'local':
-        return `http://127.0.0.1:4170`;
-      case 'test':
-        return `https://localhost:3010/services/aibotservice`;
-      default:
-        throw new Error(`Unknown environment: ${this.environment}`);
-    }
-  }
+  readonly serviceName = 'aiBot' as const;
 
   async constructChatUrl({
     interactivityId,

@@ -55,21 +55,7 @@ export interface WritingTaskAnswer {
  * token as the highlight service does.
  */
 export class WritingTaskService extends BaseService {
-  discoverUrlPrefix(): string {
-    switch (this.environment) {
-      case 'production':
-        return `https://writingtask.services.${this.baseDomain}`;
-      case 'development':
-      case 'testing':
-        return `https://staging-writingtask.services.${this.baseDomain}`;
-      case 'local':
-        return `http://127.0.0.1:4140`;
-      case 'test':
-        return `https://localhost:3010/services/writingtask`;
-      default:
-        throw new Error(`Unknown environment: ${this.environment}`);
-    }
-  }
+  readonly serviceName = 'writingTask' as const;
 
   /** Answers stored for the given content ids, one bucket per cid. */
   async getResponse({

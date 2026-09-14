@@ -1,21 +1,7 @@
 import BaseService from './base_service.js';
 
 export class SolrProxyService extends BaseService {
-  discoverUrlPrefix(): string {
-    switch (this.environment) {
-      case 'production':
-        return `https://solr-proxy.eu-west-1.${this.baseDomain}`;
-      case 'development':
-      case 'testing':
-        return `https://solr-proxy-staging.eu-west-1.${this.baseDomain}`;
-      case 'local':
-        return `http://127.0.0.1:4150`;
-      case 'test':
-        return `https://localhost:3010/services/solrproxy`;
-      default:
-        throw new Error(`Unknown environment: ${this.environment}`);
-    }
-  }
+  readonly serviceName = 'solrProxy' as const;
 }
 
 export default SolrProxyService;

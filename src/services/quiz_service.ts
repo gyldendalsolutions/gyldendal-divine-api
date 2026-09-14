@@ -1,4 +1,5 @@
 import BaseService from './base_service.js';
+import { resolveServiceUrl } from './service_urls.js';
 
 export interface QuizStartResponse {
   quizUnitId: number;
@@ -410,35 +411,26 @@ export type QuizFormResponse = QuizFormSuccess | QuizFormError;
 const REQUEST_TIMEOUT = 10000; // 10 seconds
 
 export class QuizService extends BaseService {
-  discoverUrlPrefix(): string {
-    switch (this.environment) {
-      case 'production':
-        return 'https://api.iquiz.dk/api';
-      case 'development':
-      case 'testing':
-      case 'local':
-        return 'https://galecms.test.tibalo.dk/api';
-      case 'test':
-        return `https://localhost:3010/galeapi/api`;
-      default:
-        throw new Error(`Unknown environment: ${this.environment}`);
-    }
-  }
+  readonly serviceName = 'quiz' as const;
 
   /**
    * Where a mediafile `identifier` is served from: the API prefix without its
-   * path, so the host mapping stays in `discoverUrlPrefix()` alone and an
-   * explicit `serviceUrl` is honoured the way `getUrlPrefix()` honours it.
+   * path, so the host mapping stays in `SERVICE_URLS` alone and everything
+   * that can redirect the API — an explicit `serviceUrl`, a per-service
+   * override — carries the media with it.
    *
-   * The exception is the mock environment, where the app serves the fixtures
-   * itself and their identifiers are already relative to it — unless a
-   * `serviceUrl` is set, which overrides the environment there as everywhere.
+   * The exception is the mock server, where the app serves the fixtures
+   * itself and their identifiers are already relative to it. That is asked of
+   * the resolved prefix rather than of `environment`, so it stays true when a
+   * caller is sent to the mock by an override, and stops being true when one
+   * sends them somewhere real from the mock environment.
    */
   getMediaUrlPrefix(): string {
-    if (!this.serviceUrl && this.environment === 'test') {
+    const prefix = this.getUrlPrefix();
+    if (prefix === resolveServiceUrl('quiz', 'test', this.baseDomain)) {
       return '';
     }
-    return new URL(this.getUrlPrefix()).origin;
+    return new URL(prefix).origin;
   }
 
   private makeHeaders(extra?: Record<string, string>): Headers {

@@ -1,5 +1,9 @@
 export * from 'jwt.js';
 
+// Endpoint discovery
+export * from 'services/service_urls.js';
+export * from 'services/service_overrides.js';
+
 // Fully implemented services
 export * from 'services/tagging_service.js';
 export * from 'services/polly_service.js';

@@ -1,21 +1,7 @@
 import BaseService from './base_service.js';
 
 export class UserSettingsBase extends BaseService {
-  discoverUrlPrefix(): string {
-    switch (this.environment) {
-      case 'production':
-        return `https://user-settings-service.services.${this.baseDomain}`;
-      case 'development':
-      case 'testing':
-        return `https://staging-user-settings-service.services.${this.baseDomain}`;
-      case 'local':
-        return `http://127.0.0.1:4110`;
-      case 'test':
-        return `https://localhost:3010/services/usersettingsservice`;
-      default:
-        throw new Error(`Unknown environment: ${this.environment}`);
-    }
-  }
+  readonly serviceName = 'userSettings' as const;
 }
 
 export default UserSettingsBase;

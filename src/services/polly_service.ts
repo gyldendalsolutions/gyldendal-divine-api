@@ -30,21 +30,7 @@ export interface SynthesisRequest {
 }
 
 export class PollyService extends BaseService {
-  discoverUrlPrefix(): string {
-    switch (this.environment) {
-      case 'production':
-        return `https://appear-polly.services.${this.baseDomain}`;
-      case 'development':
-      case 'testing':
-        return `https://staging-appear-polly.services.${this.baseDomain}`;
-      case 'local':
-        return `http://127.0.0.1:3200`;
-      case 'test':
-        return `https://localhost:3010/services/polly`;
-      default:
-        throw new Error(`Unknown environment: ${this.environment}`);
-    }
-  }
+  readonly serviceName = 'polly' as const;
 
   async synthesize({
     body,
