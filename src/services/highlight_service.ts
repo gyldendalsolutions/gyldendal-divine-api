@@ -152,21 +152,7 @@ export interface IRecreationData {
 }
 
 export class HighlightService extends BaseService {
-  discoverUrlPrefix(): string {
-    switch (this.environment) {
-      case 'production':
-        return `https://highlights.services.${this.baseDomain}`;
-      case 'development':
-      case 'testing':
-        return `https://staging-highlights.services.${this.baseDomain}`;
-      case 'local':
-        return `http://127.0.0.1:4120`;
-      case 'test':
-        return `https://localhost:3010/services/highlight`;
-      default:
-        throw new Error(`Unknown environment: ${this.environment}`);
-    }
-  }
+  readonly serviceName = 'highlight' as const;
 
   async search({
     search,
