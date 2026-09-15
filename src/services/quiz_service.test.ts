@@ -1,6 +1,8 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { QuizService } from './quiz_service.js';
+import { GALE_QA_URL } from './service_urls.js';
+import { resetOverrideReports } from './service_overrides.js';
 
 function service(environment: string, serviceUrl?: string): QuizService {
   return new QuizService({
@@ -78,5 +80,56 @@ describe('QuizService.getMediaUrlPrefix', () => {
 
   test('rejects an unknown environment', () => {
     assert.throws(() => service('staging').getMediaUrlPrefix(), /Unknown environment/);
+  });
+});
+
+describe('the Gale QA endpoint', () => {
+  // TYPO3 turns this on per site through
+  // `site.sso.sso_overrides.galeQaEndpointEnabled`, and the caller applies it
+  // as an override rather than as a `serviceUrl`, so the rest of the table
+  // keeps working and the redirection is reported.
+  const qaService = (environment: string): QuizService =>
+    new QuizService({
+      bearerToken: 'a-token',
+      environment,
+      myAccountId: 'SYSTIMEMYACCOUNT',
+      environmentOverrides: { quiz: GALE_QA_URL },
+      onOverride: () => {}
+    });
+
+  // `GALE_QA_URL` is pinned to a literal in `service_urls.test.ts`.
+  test('replaces the environment endpoint when quiz is overridden with it', () => {
+    resetOverrideReports();
+
+    assert.equal(qaService('development').discoverUrlPrefix(), GALE_QA_URL);
+    assert.notEqual(GALE_QA_URL, service('development').discoverUrlPrefix());
+  });
+
+  test('carries the media host with it', () => {
+    resetOverrideReports();
+
+    assert.equal(
+      qaService('development').getMediaUrlPrefix(),
+      'https://galecms.qa.tibalo.dk'
+    );
+  });
+
+  test('is reported, naming the environment it replaced', () => {
+    resetOverrideReports();
+
+    const messages: string[] = [];
+    new QuizService({
+      bearerToken: 'a-token',
+      environment: 'development',
+      myAccountId: 'SYSTIMEMYACCOUNT',
+      environmentOverrides: { quiz: GALE_QA_URL },
+      onOverride: ({ message }) => messages.push(message)
+    }).discoverUrlPrefix();
+
+    assert.equal(messages.length, 1);
+    assert.match(messages[0]!, /quiz is overridden/);
+    assert.match(messages[0]!, /galecms\.qa\.tibalo\.dk/);
+    assert.match(messages[0]!, /"development" endpoint/);
+    assert.match(messages[0]!, /environmentOverrides/);
   });
 });

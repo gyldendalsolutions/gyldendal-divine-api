@@ -42,6 +42,21 @@ is issued for that name.
 | polly | `http://127.0.0.1:3200` | `systime-appear-polly` docker-compose-development; its container port 3000 is taken by nuxt dev. Synthesis needs AWS credentials, and the container's CORS preflight currently rejects the `Authorization` header this SDK sends |
 | quiz (Gale CMS) | `https://galecms.test.tibalo.dk/api` | no local Gale, shared test instance |
 
+Gale also has a QA installation, which is not an environment of its own —
+`quiz` is the only service that has one. It is exported as `GALE_QA_URL` and
+applied as an override, so the URL stays in this package:
+
+```ts
+import { GALE_QA_URL } from '@gyldendalas/gyldendal-divine-api';
+
+environmentOverrides: { quiz: GALE_QA_URL }
+```
+
+TYPO3 asks for it per site through `site.sso.sso_overrides.galeQaEndpointEnabled`.
+It is a testing arrangement, so the caller decides whether to honour it: a
+constructor override is applied in production too, unlike the ambient ones
+below.
+
 ### Running a mix of local and hosted services
 
 `environment` picks one environment for everything, which is rarely what

@@ -117,6 +117,23 @@ export const SERVICE_URLS = {
 
 export type ServiceName = keyof typeof SERVICE_URLS;
 
+/**
+ * Gale CMS's QA installation, which is not a target of its own: `quiz` is the
+ * only service with a QA endpoint, and a fifth `Target` would oblige the other
+ * nine to name one they do not have.
+ *
+ * It is reached by overriding `quiz` with it, so the URL stays in this file
+ * and a caller who turns it on keeps tracking this package:
+ *
+ * ```ts
+ * environmentOverrides: { quiz: GALE_QA_URL }
+ * ```
+ *
+ * TYPO3 asks for it through `site.sso.sso_overrides.galeQaEndpointEnabled`,
+ * which is a testing arrangement: honour it outside production only.
+ */
+export const GALE_QA_URL = 'https://galecms.qa.tibalo.dk/api';
+
 /** Where `service` answers in `environment`. */
 export function resolveServiceUrl(
   service: ServiceName,
