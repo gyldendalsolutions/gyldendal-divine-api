@@ -140,9 +140,7 @@ describe('SERVICE_URLS', () => {
 });
 
 describe('GALE_QA_URL', () => {
-  // Written out for the same reason as EXPECTED above: the constant is what
-  // callers override `quiz` with, so a test that compared it against itself
-  // would still pass if the path or host drifted.
+  // Written out, like EXPECTED above, so a drifting host or path fails here.
   test('is Gale CMS\'s QA installation', () => {
     assert.equal(GALE_QA_URL, 'https://galecms.qa.tibalo.dk/api');
   });

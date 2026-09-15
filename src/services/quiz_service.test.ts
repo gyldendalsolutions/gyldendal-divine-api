@@ -97,8 +97,7 @@ describe('the Gale QA endpoint', () => {
       onOverride: () => {}
     });
 
-  // What `GALE_QA_URL` itself spells is pinned to a literal in
-  // `service_urls.test.ts`; these tests are about the override taking effect.
+  // `GALE_QA_URL` is pinned to a literal in `service_urls.test.ts`.
   test('replaces the environment endpoint when quiz is overridden with it', () => {
     resetOverrideReports();
 
