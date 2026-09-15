@@ -120,7 +120,7 @@ export type ServiceName = keyof typeof SERVICE_URLS;
 /**
  * Gale CMS's QA installation, which is not a target of its own: `quiz` is the
  * only service with a QA endpoint, and a fifth `Target` would oblige the other
- * ten to name one they do not have.
+ * nine to name one they do not have.
  *
  * It is reached by overriding `quiz` with it, so the URL stays in this file
  * and a caller who turns it on keeps tracking this package:

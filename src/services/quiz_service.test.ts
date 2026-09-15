@@ -129,6 +129,7 @@ describe('the Gale QA endpoint', () => {
     assert.equal(messages.length, 1);
     assert.match(messages[0]!, /quiz is overridden/);
     assert.match(messages[0]!, /galecms\.qa\.tibalo\.dk/);
+    assert.match(messages[0]!, /"development" endpoint/);
     assert.match(messages[0]!, /environmentOverrides/);
   });
 });
