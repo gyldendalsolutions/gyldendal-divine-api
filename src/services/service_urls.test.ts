@@ -2,6 +2,7 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   ENVIRONMENTS,
+  GALE_QA_URL,
   SERVICE_URLS,
   resolveServiceUrl,
   type ServiceName
@@ -135,6 +136,24 @@ describe('SERVICE_URLS', () => {
       () => resolveServiceUrl('highlight', 'staging', 'systime.dk'),
       /Unknown environment: staging/
     );
+  });
+});
+
+describe('GALE_QA_URL', () => {
+  // Written out for the same reason as EXPECTED above: the constant is what
+  // callers override `quiz` with, so a test that compared it against itself
+  // would still pass if the path or host drifted.
+  test('is Gale CMS\'s QA installation', () => {
+    assert.equal(GALE_QA_URL, 'https://galecms.qa.tibalo.dk/api');
+  });
+
+  test('is no environment\'s own quiz endpoint, so overriding with it moves', () => {
+    for (const environment of ENVIRONMENTS) {
+      assert.notEqual(
+        resolveServiceUrl('quiz', environment, 'systime.dk'),
+        GALE_QA_URL
+      );
+    }
   });
 });
 
