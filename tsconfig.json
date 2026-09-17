@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
     "outDir": "lib",
     "module": "Node16",
     "target": "esnext",
@@ -9,7 +8,8 @@
     "lib": [
       "esnext",
       "dom"
-    ]
+    ],
+    "types": ["node"]
   },
   "include": [
     "src"
