@@ -1,35 +1,10 @@
 import BaseService from './base_service.js';
-
-export interface NoteHighlight {
-  color: string;
-  comment: string;
-  selectedText: string;
-}
-
-export interface Notes {
-  created: string;
-  highlight: NoteHighlight;
-  link: string;
-  pid: string;
-  title: string;
-  /** Not read by the export; kept for callers that carry one. */
-  id?: string;
-}
-
-export interface NotesLabels {
-  amountOfNotesProse: string;
-  documentTitle: string;
-  markedText: string;
-  noContentLabel: string;
-  noSelectedTextLabel: string;
-  notesExportedAt: string;
-  yourNote: string;
-}
-
-export interface NotesData {
-  labels: NotesLabels;
-  notes: Notes[];
-}
+import type {
+  NoteHighlight,
+  Notes,
+  NotesData,
+  NotesLabels
+} from '@gyldendalsolutions/divine-api-types';
 
 export interface NotesRequest {
   exportedDate: string;

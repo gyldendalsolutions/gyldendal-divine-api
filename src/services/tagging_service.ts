@@ -1,16 +1,10 @@
 import BaseService from './base_service.js';
+import type {
+  Tag,
+  TagOutput
+} from '@gyldendalsolutions/divine-api-types';
 
-export interface Tag {
-  identity: string;
-  resource_type: string;
-  resource_name: string;
-  tag_name: string;
-  tag_value: string;
-}
 
-export interface TagOutput extends Tag {
-  created_at: number;
-}
 
 export class TaggingService extends BaseService {
   readonly serviceName = 'tagging' as const;
