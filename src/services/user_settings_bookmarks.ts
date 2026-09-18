@@ -1,14 +1,8 @@
 import UserSettingsBase from './user_settings_base.js';
-
-export interface Bookmark extends BookmarkUpdate {
-  createdTimeStamp: number;
-  isbn?: string;
-}
-
-export interface BookmarkUpdate {
-  pageId: number;
-  contentId: number;
-}
+import type {
+  Bookmark,
+  BookmarkUpdate
+} from '@gyldendalsolutions/divine-api-types';
 
 export class UserSettingsBookmarks extends UserSettingsBase {
   async setBookmark({

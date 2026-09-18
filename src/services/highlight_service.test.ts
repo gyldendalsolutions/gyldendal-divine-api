@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import type { HighlightRanges } from './highlight_service.js';
+import type { HighlightRanges } from '@gyldendalsolutions/divine-api-types';
 
 // The service stores ranges as XPath strings with numeric offsets. This is a
 // compile-time guard: assigning the shape the frontend sends must typecheck.
