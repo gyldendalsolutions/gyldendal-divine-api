@@ -1,22 +1,5 @@
 import BaseService from './base_service.js';
-
-export interface CookieConsentRequest {
-  consentState: CookieConsentState;
-  consentUrl: string;
-  timeStamp: number;
-  uuid: string;
-}
-
-export interface CookieConsentState {
-  func: number;
-  stat: number;
-  uuid: string;
-  version: number;
-}
-
-export interface CookieConsentResponse {
-  response: string;
-}
+import type { CookieConsentRequest } from '@gyldendalsolutions/divine-contracts';
 
 export class CookieConsentLog extends BaseService {
   readonly serviceName = 'cookieConsentLog' as const;

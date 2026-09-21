@@ -1,85 +1,9 @@
 import UserSettingsBase from './user_settings_base.js';
 import { HTTPError } from './base_service.js';
-
-export interface ClientSettingsResponse {
-  settings: ClientSettings;
-}
-export interface ClientSettings {
-  readabilities?: Readability;
-  darkMode?: boolean;
-  displayMode?: DisplayModeOption;
-  enableKeyboardShortcuts?: boolean;
-  showBookmarks?: boolean;
-  showNoteHighlights?: boolean;
-  featureGalleryVersion?: number;
-  highlightsSorting?: HighlightsSorting;
-  readAloudStore?: ReadAloudStore;
-  leftDrawerWidth?: number;
-  recentSearches?: string[];
-  materialListImagesView?: LayoutView;
-  frontPageSections?: FrontPageSection[];
-  activePublicationFilters?: ActivePublicationFilters;
-  cardsView?: LayoutView;
-  cardsSorting?: SortOptions;
-  foldersView?: LayoutView;
-  foldersSorting?: SortOptions;
-  onboardingPromptTime?: string;
-  showOnboardingPrompt?: boolean;
-  favoritesSorting?: SortOptions;
-}
-
-export type DisplayModeOption = 'light' | 'dark' | 'system';
-
-export type LayoutView = 'list' | 'grid';
-
-export interface ActivePublicationFilters {
-  educations?: string[];
-  displaySubjects?: string[];
-  categoriesNames?: string[];
-  categoriesLevels?: string[];
-  publishers?: string[];
-}
-
-export interface Readability {
-  letterSpacing?: number;
-  lineHeight?: number;
-  textSize?: number;
-  fontFamily?: FontFamily;
-}
-
-export interface FontFamily {
-  name?: string;
-  defaultSize?: string;
-  url?: string;
-}
-
-export interface ReadAloudStore {
-  currentVoiceSelection?: CurrentVoiceSelection;
-  currentSpeedSelection?: CurrentSpeedSelection;
-}
-
-export interface CurrentSpeedSelection {
-  speed?: number;
-  text?: string;
-}
-
-export interface CurrentVoiceSelection {
-  voice?: number;
-  gender?: number;
-  language?: number;
-}
-
-export interface FrontPageSection {
-  changeable?: boolean;
-  code?: string;
-  enabled?: boolean;
-  name?: string;
-  position?: number;
-}
-
-export type SortOptions = 'recent' | 'alphabetical';
-
-export type HighlightsSorting = 'newest' | 'chapters';
+import type {
+  ClientSettings,
+  ClientSettingsResponse
+} from '@gyldendalsolutions/divine-contracts';
 
 export class UserSettingsClientSettings extends UserSettingsBase {
   async getSettings({

@@ -1,10 +1,5 @@
 import UserSettingsBase from './user_settings_base.js';
-
-export interface MRU {
-  isbn: string;
-  link: string;
-  title: string;
-}
+import type { MRU } from '@gyldendalsolutions/divine-contracts';
 
 export class UserSettingsMRU extends UserSettingsBase {
   async setMRU({

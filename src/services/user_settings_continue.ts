@@ -1,13 +1,9 @@
 import UserSettingsBase from './user_settings_base.js';
 import { HTTPError } from './base_service.js';
-
-export interface Continue extends ContinueUpdate {
-  createdTimeStamp?: number;
-}
-
-export interface ContinueUpdate {
-  pageId: number;
-}
+import type {
+  Continue,
+  ContinueUpdate
+} from '@gyldendalsolutions/divine-contracts';
 
 export class UserSettingsContinue extends UserSettingsBase {
   async setContinue({

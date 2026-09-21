@@ -1,22 +1,10 @@
 import TaggingService from '../../tagging_service.js';
 import { v4 as uuidv4 } from 'uuid';
-
-export interface FolderObject {
-  created_at: number;
-}
-
-export interface Folder extends FolderObject {
-  name: string;
-  color: string;
-  uuid: string;
-  parent?: string;
-}
-
-export interface FolderContent extends FolderObject {
-  type: string;
-  identifier: string;
-  folder_uuid: string;
-}
+import type {
+  Folder,
+  FolderContent,
+  FolderObject
+} from '@gyldendalsolutions/divine-contracts';
 
 /**
  * UserFolders is a service that allows users to create folders in their account. It's built on top of the Tagging service.
