@@ -1,7 +1,10 @@
 import { test, describe, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { PdfGeneratorService } from './pdf_generator.js';
-import type { SiteMapPage, WritingTaskItem } from './pdf_generator.js';
+import type {
+  SiteMapPage,
+  WritingTaskItem
+} from '@gyldendalsolutions/divine-contracts';
 
 const realFetch = globalThis.fetch;
 

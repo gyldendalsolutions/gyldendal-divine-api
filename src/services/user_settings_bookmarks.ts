@@ -2,7 +2,7 @@ import UserSettingsBase from './user_settings_base.js';
 import type {
   Bookmark,
   BookmarkUpdate
-} from '@gyldendalsolutions/divine-api-types';
+} from '@gyldendalsolutions/divine-contracts';
 
 export class UserSettingsBookmarks extends UserSettingsBase {
   async setBookmark({

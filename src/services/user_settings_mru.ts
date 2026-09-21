@@ -1,5 +1,5 @@
 import UserSettingsBase from './user_settings_base.js';
-import type { MRU } from '@gyldendalsolutions/divine-api-types';
+import type { MRU } from '@gyldendalsolutions/divine-contracts';
 
 export class UserSettingsMRU extends UserSettingsBase {
   async setMRU({

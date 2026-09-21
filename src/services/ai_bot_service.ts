@@ -1,51 +1,10 @@
 import BaseService from './base_service.js';
-
-export type AIChatRole = 'user' | 'assistant' | 'system';
+import type {
+  AIChatCompletion,
+  AIChatCompletionRequest
+} from '@gyldendalsolutions/divine-contracts';
 
 type GenericContext = Record<string, unknown>;
-
-export interface AIChatMessage<
-  ContextType extends GenericContext = GenericContext
-> {
-  role: AIChatRole;
-  content: string;
-  context?: ContextType;
-}
-
-export interface AIChatMessageDelta<
-  ContextType extends GenericContext = GenericContext
-> {
-  role?: AIChatRole;
-  content?: string;
-  context?: ContextType;
-}
-
-export interface AIChatCompletion<
-  ContextType extends GenericContext = GenericContext
-> {
-  message: AIChatMessage;
-  sessionState?: unknown;
-  context?: ContextType;
-}
-
-export interface AIChatCompletionDelta<
-  ContextType extends GenericContext = GenericContext
-> {
-  delta: AIChatMessageDelta;
-  sessionState?: unknown;
-  context?: ContextType;
-}
-
-export interface AIChatCompletionOptions<
-  ContextType extends GenericContext = GenericContext
-> {
-  context?: ContextType;
-  sessionState?: unknown;
-}
-
-export type AIChatCompletionRequest = {
-  messages: AIChatMessage[];
-} & AIChatCompletionOptions;
 
 export class AIBotService extends BaseService {
   readonly serviceName = 'aiBot' as const;

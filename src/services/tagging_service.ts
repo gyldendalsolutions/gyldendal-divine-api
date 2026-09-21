@@ -2,9 +2,7 @@ import BaseService from './base_service.js';
 import type {
   Tag,
   TagOutput
-} from '@gyldendalsolutions/divine-api-types';
-
-
+} from '@gyldendalsolutions/divine-contracts';
 
 export class TaggingService extends BaseService {
   readonly serviceName = 'tagging' as const;

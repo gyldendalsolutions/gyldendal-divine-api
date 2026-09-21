@@ -3,7 +3,7 @@ import { HTTPError } from './base_service.js';
 import type {
   Continue,
   ContinueUpdate
-} from '@gyldendalsolutions/divine-api-types';
+} from '@gyldendalsolutions/divine-contracts';
 
 export class UserSettingsContinue extends UserSettingsBase {
   async setContinue({

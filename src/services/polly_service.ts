@@ -1,23 +1,8 @@
 import BaseService from './base_service.js';
 import type {
-  SpeechmarkEvent,
+  SynthesisRequest,
   SynthesisResponse
-} from '@gyldendalsolutions/divine-api-types';
-
-export enum SSMLSpeechSpeeds {
-  X_SLOW = 1,
-  SLOW = 2,
-  MEDIUM = 3,
-  FAST = 4,
-  X_FAST = 5
-}
-
-export interface SynthesisRequest {
-  text: string;
-  includeSpeechMarks?: boolean;
-  voice: number;
-  speed?: SSMLSpeechSpeeds;
-}
+} from '@gyldendalsolutions/divine-contracts';
 
 export class PollyService extends BaseService {
   readonly serviceName = 'polly' as const;

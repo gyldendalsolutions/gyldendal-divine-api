@@ -4,7 +4,7 @@ import type {
   Folder,
   FolderContent,
   FolderObject
-} from '@gyldendalsolutions/divine-api-types';
+} from '@gyldendalsolutions/divine-contracts';
 
 /**
  * UserFolders is a service that allows users to create folders in their account. It's built on top of the Tagging service.

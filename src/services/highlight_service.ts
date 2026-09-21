@@ -1,66 +1,16 @@
 import BaseService from './base_service.js';
 import type {
-  Highlight,
-  HighlightRanges,
+  HighlightAddResult,
+  HighlightCountResponse,
+  HighlightDeleteResult,
   HighlightRequest,
   HighlightResponse,
-  HighlightUpdate,
-  ICtype,
-  ICtypeDict,
-  IRecreationData,
-  ITextStartEndObject
-} from '@gyldendalsolutions/divine-api-types';
-
-export enum HighlightResultType {
-  'highlight' = 'highlight',
-  'note' = 'note'
-}
-
-export interface HiglightSearchMatch {
-  rangeKey: number;
-  confidence: number;
-  texttype: HighlightResultType;
-  isbn: string;
-  pid: number;
-  returnedItem: number;
-}
-
-export interface HighlightSearchResponse {
-  Items: HighlightResponse[];
-  Matches: HiglightSearchMatch[];
-}
-
-export interface HighlightSearchRequest {
-  searchQuery: string;
-  resultType?: HighlightResultType;
-  isbn?: string;
-  maxResults?: number;
-  vectorMinConfidence?: number;
-  vectorHighConfidence?: number;
-  fulltextMinScore?: number;
-}
-
-export interface HighlightUpdateRequest {
-  highlight: HighlightUpdate;
-}
-
-export interface HighlightCountResponse {
-  type: HighlightResultType;
-  isbn: string;
-  count: number;
-}
-
-export interface HighlightDeleteResult extends HighlightUpdateResponse {
-  changed: number;
-}
-
-export interface HighlightAddResult extends HighlightUpdateResponse {
-  timestampSortKey: number;
-}
-
-export interface HighlightUpdateResponse {
-  status: string;
-}
+  HighlightResultType,
+  HighlightSearchRequest,
+  HighlightSearchResponse,
+  HighlightUpdateRequest,
+  HighlightUpdateResponse
+} from '@gyldendalsolutions/divine-contracts';
 
 export class HighlightService extends BaseService {
   readonly serviceName = 'highlight' as const;

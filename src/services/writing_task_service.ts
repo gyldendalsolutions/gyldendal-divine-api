@@ -1,11 +1,8 @@
 import BaseService from './base_service.js';
 import type {
-  StepwiseTaskData,
-  StepwiseTaskDataItem,
   WritingTaskAnswer,
-  WritingTaskResponse,
   WritingTaskResponseBucket
-} from '@gyldendalsolutions/divine-api-types';
+} from '@gyldendalsolutions/divine-contracts';
 
 /**
  * The writing task service authenticates on the bearer token but still reads

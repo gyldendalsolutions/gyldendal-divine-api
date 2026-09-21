@@ -7,7 +7,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@gyldendalsolutions/divine-api-types": "^0.1.0",
+    "@gyldendalsolutions/divine-contracts": "^0.1.0",
     "uuid": "^14.0.1"
   },
   "devDependencies": {

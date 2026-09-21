@@ -1,83 +1,17 @@
 import BaseService from './base_service.js';
 import { resolveServiceUrl } from './service_urls.js';
 import type {
-  Answer,
-  AnswerBins,
-  AnswerIcon,
-  CalculatedScore,
-  ChosenAnswer,
-  Dropdown,
-  DropdownMap,
-  FormattedQuestion,
-  FormattedQuizUnit,
-  FormattedSharedStudentQuiz,
-  FormattedSharedTeacherQuiz,
-  InputText,
-  InputTextMap,
-  Mediafile,
-  NewAnswer,
-  ProblemAnswerState,
-  ProblemField,
-  ProblemScore,
-  Question,
   Quiz,
-  QuizDescriptionData,
-  QuizFormError,
   QuizFormResponse,
-  QuizFormSuccess,
   QuizFormType,
-  QuizLocalState,
   QuizResult,
   QuizSession,
-  QuizTableAction,
-  QuizTableItem,
-  QuizTextSettings,
-  QuizUnit,
-  Results,
-  SaveAnswer,
-  Score,
-  SearchableKeys,
-  SharedQuizBase,
+  QuizStartResponse,
+  SaveAnswerResponse,
   SharedQuizData,
-  SharedQuizUserInfo,
   SharedStudentQuiz,
-  SharedTeacherQuiz,
-  TableData,
-  TableDataColumn,
-  TimeSpent,
-  Tokens,
-  TokensDiffCheck,
-  WordOptions,
-  WordOptionsOption
-} from '@gyldendalsolutions/divine-api-types';
-
-export interface QuizStartResponse {
-  quizUnitId: number;
-}
-
-export interface DropdownFormattedOption {
-  answerId: number;
-  options: Dropdown[];
-  originalOptions: Dropdown[];
-}
-
-export interface WordOptionsAnswer {
-  answerId?: number;
-  options?: (string | AnswerIcon)[];
-  text: WordOptionsAnswerText | undefined;
-  index: number;
-  selected?: undefined | string | AnswerIcon;
-}
-
-export interface WordOptionsAnswerText {
-  answers: string;
-  words: string;
-  position: number;
-}
-
-export interface SaveAnswerResponse {
-  Result: string;
-}
+  SharedTeacherQuiz
+} from '@gyldendalsolutions/divine-contracts';
 
 const REQUEST_TIMEOUT = 10000; // 10 seconds
 

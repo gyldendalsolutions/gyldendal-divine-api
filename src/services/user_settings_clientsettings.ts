@@ -3,7 +3,7 @@ import { HTTPError } from './base_service.js';
 import type {
   ClientSettings,
   ClientSettingsResponse
-} from '@gyldendalsolutions/divine-api-types';
+} from '@gyldendalsolutions/divine-contracts';
 
 export class UserSettingsClientSettings extends UserSettingsBase {
   async getSettings({
