@@ -9,6 +9,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: read
 
     runs-on: ubuntu-latest
     steps:
@@ -21,6 +22,7 @@ jobs:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
+      - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
       - run: pnpm install --frozen-lockfile
       - run: npm version "${{ github.event.release.tag_name }}" --no-git-tag-version
       - run: pnpm run build
