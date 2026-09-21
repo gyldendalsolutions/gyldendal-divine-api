@@ -24,9 +24,14 @@ jobs:
           cache: 'pnpm'
       - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
       - run: pnpm install --frozen-lockfile
-      - run: npm version "${{ github.event.release.tag_name }}" --no-git-tag-version
+      - run: npm version "$RELEASE_TAG" --no-git-tag-version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
       - run: pnpm run build
+      # A tag carrying a prerelease suffix publishes under "next" so it never
+      # displaces "latest" for consumers installing without a version.
       - run: |
-          VERSION="${{ github.event.release.tag_name }}"
-          if [[ "$VERSION" == *-* ]]; then TAG=next; else TAG=latest; fi
+          if [[ "$RELEASE_TAG" == *-* ]]; then TAG=next; else TAG=latest; fi
           npm publish --access public --no-git-checks --tag "$TAG"
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
