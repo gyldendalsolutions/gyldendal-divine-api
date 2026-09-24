@@ -37,7 +37,7 @@ export class UserSettingsMRU extends UserSettingsBase {
   }
 
   async getMRU({ timeout = 5000 }: { timeout?: number }): Promise<MRU[]> {
-    let url = `${this.getUrlPrefix()}/mru`;
+    const url = `${this.getUrlPrefix()}/mru`;
 
     const headers: HeadersInit = new Headers();
 

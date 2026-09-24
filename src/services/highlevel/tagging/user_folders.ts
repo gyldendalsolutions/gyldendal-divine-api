@@ -2,8 +2,7 @@ import TaggingService from '../../tagging_service.js';
 import { v4 as uuidv4 } from 'uuid';
 import type {
   Folder,
-  FolderContent,
-  FolderObject
+  FolderContent
 } from '@gyldendalsolutions/divine-contracts';
 
 /**
@@ -160,7 +159,7 @@ export class UserFolders extends TaggingService {
       timeout
     });
 
-    let folders = [];
+    const folders: Folder[] = [];
 
     for (const tag of tags) {
       const folder_payload = JSON.parse(
@@ -194,19 +193,18 @@ export class UserFolders extends TaggingService {
     parent_folder_uuid?: string;
     timeout?: number;
   }): Promise<Folder[]> {
-    let tags;
     if (!parent_folder_uuid) {
       parent_folder_uuid = this.hasNoParent;
     }
 
-    tags = await this.getTagsByName({
+    const tags = await this.getTagsByName({
       identity: await this.getIdentity(),
       resource_type: 'myaccount_user_folder',
       tag_name: parent_folder_uuid,
       timeout
     });
 
-    let folders = [];
+    const folders: Folder[] = [];
 
     for (const tag of tags) {
       const folder_payload = JSON.parse(
@@ -240,13 +238,13 @@ export class UserFolders extends TaggingService {
     folder_uuid: string;
     timeout?: number;
   }): Promise<(Folder | FolderContent)[]> {
-    let tags = await this.getTagsByName({
+    const tags = await this.getTagsByName({
       identity: await this.getIdentity(),
       tag_name: folder_uuid,
       timeout
     });
 
-    let content = [];
+    const content: (Folder | FolderContent)[] = [];
 
     for (const tag of tags) {
       if (tag['resource_type'] === 'myaccount_user_folder') {
