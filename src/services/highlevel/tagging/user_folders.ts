@@ -159,7 +159,7 @@ export class UserFolders extends TaggingService {
       timeout
     });
 
-    const folders = [];
+    const folders: Folder[] = [];
 
     for (const tag of tags) {
       const folder_payload = JSON.parse(
@@ -204,7 +204,7 @@ export class UserFolders extends TaggingService {
       timeout
     });
 
-    const folders = [];
+    const folders: Folder[] = [];
 
     for (const tag of tags) {
       const folder_payload = JSON.parse(

@@ -16,6 +16,6 @@ jobs:
         with:
           node-version: 24
           cache: 'pnpm'
-      - run: npm config set "//npm.pkg.github.com/:_authToken=${{ secrets.PACKAGES_READ_TOKEN }}"
+      - run: pnpm config set "//npm.pkg.github.com/:_authToken=${{ secrets.PACKAGES_READ_TOKEN }}"
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
