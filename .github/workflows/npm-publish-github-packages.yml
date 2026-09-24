@@ -22,7 +22,7 @@ jobs:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
-      - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.PACKAGES_READ_TOKEN }}" >> ~/.npmrc
+      - run: npm config set "//npm.pkg.github.com/:_authToken=${{ secrets.PACKAGES_READ_TOKEN }}"
       - run: pnpm install --frozen-lockfile
       - run: npm version "$RELEASE_TAG" --no-git-tag-version
         env:
