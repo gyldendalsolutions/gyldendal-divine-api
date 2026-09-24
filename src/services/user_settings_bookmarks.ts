@@ -84,7 +84,7 @@ export class UserSettingsBookmarks extends UserSettingsBase {
   }: {
     timeout?: number;
   }): Promise<Bookmark[]> {
-    let url = `${this.getUrlPrefix()}/bookmark/favourite`;
+    const url = `${this.getUrlPrefix()}/bookmark/favourite`;
 
     const headers: HeadersInit = new Headers();
 

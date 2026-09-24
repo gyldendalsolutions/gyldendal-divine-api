@@ -2,19 +2,28 @@
   "name": "@gyldendalas/gyldendal-divine-api",
   "type": "module",
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "cleanup": "pnpm -r --if-present run cleanup",
     "build": "tsdown",
-    "test": "node --import tsx/esm --test 'src/**/*.test.ts'",
-    "typecheck": "tsc --noEmit"
+    "test": "node --import tsx/esm --test 'src/**/*.test.ts'"
   },
+  "packageManager": "pnpm@12.6.0",
   "dependencies": {
     "@gyldendalsolutions/divine-contracts": "^0.1.0",
     "uuid": "^14.0.2"
   },
   "devDependencies": {
-    "@types/node": "^24.13.5",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.13.6",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "jiti": "^2.7.0",
     "tsdown": "^0.23.0",
-    "tsx": "^4.23.13",
-    "typescript": "~6.0.3"
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.70.1"
   },
   "license": "MIT",
   "repository": {
