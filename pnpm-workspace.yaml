@@ -1,4 +1,4 @@
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - '@gyldendalsolutions/divine-contracts@0.1.0'
+  - '@gyldendalsolutions/divine-contracts@0.2.0'

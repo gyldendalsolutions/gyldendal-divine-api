@@ -11,7 +11,7 @@
   },
   "packageManager": "pnpm@12.6.0",
   "dependencies": {
-    "@gyldendalsolutions/divine-contracts": "^0.1.0",
+    "@gyldendalsolutions/divine-contracts": "^0.2.0",
     "uuid": "^14.0.2"
   },
   "devDependencies": {
