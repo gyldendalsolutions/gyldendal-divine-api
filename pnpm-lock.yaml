@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@gyldendalsolutions/divine-contracts':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
       uuid:
         specifier: ^14.0.2
         version: 14.0.2
@@ -186,8 +186,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@gyldendalsolutions/divine-contracts@0.1.0':
-    resolution: {integrity: sha512-qV56UXvMJMx2JWhX67/A6+an/ovwQ91CXn/qTi3X8PysvPK8ahV6Y/Ospzg0r4qew+nTE4/V+ZH+cmtzWr//ZA==, tarball: https://npm.pkg.github.com/download/@gyldendalsolutions/divine-contracts/0.1.0/8ddc39710f4c64d5034c7a61aa244c8e65c3d2a8}
+  '@gyldendalsolutions/divine-contracts@0.2.0':
+    resolution: {integrity: sha512-UWb2z/FB4hSjCvok68uKMD8PQb+0j4kM0w0qxb43LAJZHmUcMnp2fVZ9FV0FSGlUeXSsQxGQO6TShuQa5IjK6g==, tarball: https://npm.pkg.github.com/download/@gyldendalsolutions/divine-contracts/0.2.0/75d974d281768913f2c29a47863496879537fe8d}
 
   '@oxc-project/types@0.149.0':
     resolution: {integrity: sha512-Efcc+iF0j3Bf67YjEqIqWXbX5XddXoK/Mw4K1/JuXwRCZ8N16VR7iT23nlCc9XrveFVh/E5Rqs2StT0V8v9LdA==}
@@ -686,7 +686,7 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@gyldendalsolutions/divine-contracts@0.1.0': {}
+  '@gyldendalsolutions/divine-contracts@0.2.0': {}
 
   '@oxc-project/types@0.149.0': {}
 
