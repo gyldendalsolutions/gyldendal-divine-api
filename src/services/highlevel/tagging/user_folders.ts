@@ -244,7 +244,7 @@ export class UserFolders extends TaggingService {
       timeout
     });
 
-    const content = [];
+    const content: (Folder | FolderContent)[] = [];
 
     for (const tag of tags) {
       if (tag['resource_type'] === 'myaccount_user_folder') {
