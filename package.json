@@ -5,7 +5,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
-    "cleanup": "pnpm -r --if-present run cleanup",
     "build": "tsdown",
     "test": "node --import tsx/esm --test 'src/**/*.test.ts'"
   },
