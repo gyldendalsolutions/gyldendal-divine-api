@@ -4,8 +4,6 @@ import type {
   AIChatCompletionRequest
 } from '@gyldendalsolutions/divine-contracts';
 
-type GenericContext = Record<string, unknown>;
-
 export class AIBotService extends BaseService {
   readonly serviceName = 'aiBot' as const;
 

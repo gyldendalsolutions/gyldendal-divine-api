@@ -58,7 +58,7 @@ export class UserSettingsContinue extends UserSettingsBase {
     isbn: string;
     timeout?: number;
   }): Promise<Continue> {
-    let url = `${this.getUrlPrefix()}/continue/isbn/${isbn}`;
+    const url = `${this.getUrlPrefix()}/continue/isbn/${isbn}`;
 
     const headers: HeadersInit = new Headers();
 
