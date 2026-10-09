@@ -1,7 +1,10 @@
 import BaseService from './base_service.js';
 import type {
   AIChatCompletion,
-  AIChatCompletionRequest
+  AIChatCompletionRequest,
+  TutorConfig,
+  TutorSession,
+  TutorSessionRequest
 } from '@gyldendalsolutions/divine-contracts';
 
 export class AIBotService extends BaseService {
@@ -100,6 +103,44 @@ export class AIBotService extends BaseService {
       throw new Error('Response body is null');
     }
     return responseBody;
+  }
+
+  async getTutorConfig({
+    isbn,
+    extraHeaders,
+    timeout = 10000
+  }: {
+    isbn: string;
+    extraHeaders?: Record<string, string>;
+    timeout?: number;
+  }): Promise<TutorConfig> {
+    const url = `${this.getUrlPrefix()}/v1/tutor/config/${encodeURIComponent(isbn)}`;
+    const headers = extraHeaders ? new Headers(extraHeaders) : null;
+
+    const response = await this.getAsync({ url, headers, timeout });
+    return response.json();
+  }
+
+  async createTutorSession({
+    isbn,
+    extraHeaders,
+    timeout = 10000
+  }: {
+    isbn: string;
+    extraHeaders?: Record<string, string>;
+    timeout?: number;
+  }): Promise<TutorSession> {
+    const url = `${this.getUrlPrefix()}/v1/tutor/session`;
+
+    const headers = new Headers(extraHeaders);
+    headers.set('Content-Type', 'application/json');
+    const response = await this.postAsync({
+      url,
+      headers,
+      body: JSON.stringify({ isbn13: isbn } satisfies TutorSessionRequest),
+      timeout
+    });
+    return response.json();
   }
 }
 
