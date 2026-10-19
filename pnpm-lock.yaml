@@ -167,8 +167,8 @@ importers:
   .:
     dependencies:
       '@gyldendalsolutions/divine-contracts':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.4.0
+        version: 0.4.0
       uuid:
         specifier: ^14.0.2
         version: 14.0.2
@@ -404,8 +404,8 @@ packages:
     resolution: {integrity: sha512-IkO+/KEUvwbVpiURZg+P7zF74z5Jxe0UgJxVni+RtoHQ6IZieXaO02kmadomap/q+l6bc/jdPGGqTjhuZnuz1Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@gyldendalsolutions/divine-contracts@0.2.0':
-    resolution: {integrity: sha512-UWb2z/FB4hSjCvok68uKMD8PQb+0j4kM0w0qxb43LAJZHmUcMnp2fVZ9FV0FSGlUeXSsQxGQO6TShuQa5IjK6g==, tarball: https://npm.pkg.github.com/download/@gyldendalsolutions/divine-contracts/0.2.0/75d974d281768913f2c29a47863496879537fe8d}
+  '@gyldendalsolutions/divine-contracts@0.4.0':
+    resolution: {integrity: sha512-RDE+fvPTXoRmkU894bxlrJ17uKxex/LIRKsL6bNwjhjmNGo+87zopDGkohNm/veJd9nWt3C0nXubWDnheTNnjw==, tarball: https://npm.pkg.github.com/download/@gyldendalsolutions/divine-contracts/0.4.0/dc1ec64f748d8d1f636c4f90a99cf7e7f838e30e}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -1305,7 +1305,7 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
-  '@gyldendalsolutions/divine-contracts@0.2.0': {}
+  '@gyldendalsolutions/divine-contracts@0.4.0': {}
 
   '@humanfs/core@0.19.2':
     dependencies:
