@@ -13,7 +13,11 @@ constructor (the `installationpurpose` of the TYPO3 installation), unless
 | `production` | production services |
 | `development`, `testing` | staging services |
 | `local` | services running on this machine, see table below |
-| `test` | the Playwright mock server on `https://localhost:3010/services/<name>` |
+| `test` | the Playwright mock server on `<origin>/services/<name>` |
+
+In a browser the `test` environment's `<origin>` is the page's own origin, and
+outside one it is `https://localhost:3010`, so the mock server may listen on any
+port.
 
 ### Local services
 
