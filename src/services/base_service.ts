@@ -219,13 +219,15 @@ export class BaseService {
     headers,
     addAuthHeaders = true,
     body,
-    timeout
+    timeout,
+    signal
   }: {
     url: URL | string;
     headers: Headers | undefined | null;
     addAuthHeaders?: boolean;
     body: string | null | undefined;
     timeout: number;
+    signal?: AbortSignal;
   }): Promise<Response> {
     const method = 'POST';
     return await this.callAsync({
@@ -234,7 +236,8 @@ export class BaseService {
       method,
       headers,
       addAuthHeaders,
-      timeout
+      timeout,
+      signal
     });
   }
 
@@ -290,7 +293,8 @@ export class BaseService {
     method,
     headers,
     timeout,
-    addAuthHeaders
+    addAuthHeaders,
+    signal
   }: {
     url: URL | string;
     body: string | null | undefined;
@@ -298,6 +302,11 @@ export class BaseService {
     headers: Headers | undefined | null;
     timeout: number;
     addAuthHeaders?: boolean;
+    /**
+     * Cancels the request from the caller's side as well, e.g. a suggestion
+     * request made stale by the next keystroke. The timeout still applies.
+     */
+    signal?: AbortSignal;
   }): Promise<Response> {
     if (!headers) {
       headers = new Headers();
@@ -311,7 +320,9 @@ export class BaseService {
       method: method,
       body: body,
       headers: headers,
-      signal: AbortSignal.timeout(timeout)
+      signal: signal
+        ? AbortSignal.any([AbortSignal.timeout(timeout), signal])
+        : AbortSignal.timeout(timeout)
     });
 
     if (!response.ok) {
