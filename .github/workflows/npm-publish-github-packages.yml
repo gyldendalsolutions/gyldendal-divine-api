@@ -22,7 +22,8 @@ jobs:
           cache: 'pnpm'
       - run: pnpm config set "//npm.pkg.github.com/:_authToken" "${{ secrets.PACKAGES_READ_TOKEN }}"
       - run: pnpm install --frozen-lockfile
-      - run: pnpm version "$RELEASE_TAG" --no-git-tag-version
+      # package.json carries no version: the release tag is the version.
+      - run: pnpm pkg set version="${RELEASE_TAG#v}"
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
       - run: pnpm run build
