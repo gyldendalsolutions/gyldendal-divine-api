@@ -131,6 +131,36 @@ describe('SERVICE_URLS', () => {
     );
   });
 
+  const page = globalThis as { location?: { origin: string } };
+
+  test('the mock follows the page origin in a browser', () => {
+    page.location = { origin: 'https://systime-ibog.test.dev:3011' };
+    try {
+      assert.equal(
+        resolveServiceUrl('highlight', 'test', ''),
+        'https://systime-ibog.test.dev:3011/services/highlight'
+      );
+      assert.equal(
+        resolveServiceUrl('quiz', 'test', ''),
+        'https://systime-ibog.test.dev:3011/galeapi/api'
+      );
+    } finally {
+      delete page.location;
+    }
+  });
+
+  test('the mock falls back to localhost:3010 on an opaque origin', () => {
+    page.location = { origin: 'null' };
+    try {
+      assert.equal(
+        resolveServiceUrl('highlight', 'test', ''),
+        'https://localhost:3010/services/highlight'
+      );
+    } finally {
+      delete page.location;
+    }
+  });
+
   test('rejects an unknown environment', () => {
     assert.throws(
       () => resolveServiceUrl('highlight', 'staging', 'systime.dk'),
