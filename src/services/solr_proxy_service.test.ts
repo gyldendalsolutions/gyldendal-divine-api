@@ -143,6 +143,79 @@ describe('searchBooks', () => {
   });
 });
 
+describe('ranking, spelling and snippets', () => {
+  test('the search options go as given', async () => {
+    captureRequests(200, RESPONSE);
+
+    await service().searchBook({
+      hostname: 'exo.systime.dk',
+      search: {
+        q: 'fotosyntse',
+        correct: 'words',
+        rerank: true,
+        min_similarity: 0.3,
+        exclude_categories: ['assignment'],
+        snippets: { count: 2, length: 300, context: true, order: 'document' }
+      }
+    });
+
+    assert.deepEqual(sent?.body, {
+      q: 'fotosyntse',
+      correct: 'words',
+      rerank: true,
+      min_similarity: 0.3,
+      exclude_categories: ['assignment'],
+      snippets: { count: 2, length: 300, context: true, order: 'document' }
+    });
+  });
+
+  test('a correction can be searched and offered at once', async () => {
+    captureRequests(200, {
+      ...RESPONSE,
+      query: 'fotosyntese lys',
+      corrected_from: 'fotosyntse lyss',
+      did_you_mean: 'fotosyntese lyst'
+    });
+
+    const result = await service().searchBook({
+      hostname: 'exo.systime.dk',
+      search: { q: 'fotosyntse lyss', correct: 'words' }
+    });
+
+    assert.equal(result.corrected_from, 'fotosyntse lyss');
+    assert.equal(result.did_you_mean, 'fotosyntese lyst');
+  });
+});
+
+describe('group_by_page', () => {
+  test('returns page groups instead of hits', async () => {
+    const hit = RESPONSE.hits![0]!;
+    captureRequests(200, {
+      ...RESPONSE,
+      hits: undefined,
+      page_groups: [{
+        book: 'exo.systime.dk',
+        language: 'da',
+        page_id: 10,
+        title: 'Fotosyntese',
+        url: 'https://exo.systime.dk/?id=10#c100',
+        best: 'h1',
+        hits: [hit]
+      }]
+    });
+
+    const result = await service().searchBook({
+      hostname: 'exo.systime.dk',
+      search: { q: 'fotosyntese', group_by_page: { hits: 3 } }
+    });
+
+    assert.deepEqual(sent?.body, { q: 'fotosyntese', group_by_page: { hits: 3 } });
+    assert.equal(result.hits, undefined);
+    assert.equal(result.page_groups?.[0]?.best, 'h1');
+    assert.equal(result.page_groups?.[0]?.hits[0]?.id, 'h1');
+  });
+});
+
 describe('languages', () => {
   test('a list of languages goes as given, primary first', async () => {
     captureRequests(200, RESPONSE);

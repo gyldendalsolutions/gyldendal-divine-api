@@ -23,7 +23,9 @@ export class SolrProxyService extends BaseService {
   /**
    * Searches one book. `hostname` is the book's primary hostname or any of
    * its aliases; the hits' URLs use the one given. Rejects with a 404 for a
-   * book that does not exist or is outside the client's scope alike.
+   * book that does not exist or is outside the client's scope alike. With
+   * `group_by_page`, the response pages over the book's pages
+   * (`page_groups`) instead of hits.
    */
   async searchBook({
     hostname,
