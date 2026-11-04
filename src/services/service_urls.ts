@@ -34,10 +34,21 @@ const TARGETS: Record<ServiceEnvironment, Target> = {
   test: 'mock'
 };
 
+const DEFAULT_MOCK_ORIGIN = 'https://localhost:3010';
+
+/**
+ * The mock server's origin: the page's own in a browser, the 3010 literal
+ * elsewhere. An opaque origin (`'null'`, as on about:blank) counts as elsewhere.
+ */
+function mockOrigin(): string {
+  const origin = globalThis.location?.origin;
+  return origin && origin !== 'null' ? origin : DEFAULT_MOCK_ORIGIN;
+}
+
 /**
  * A service's four addresses. `baseDomain` is the TYPO3 installation's domain
- * and only the hosted environments use it; local ports and the mock server
- * are the same wherever the caller runs.
+ * and only the hosted environments use it; local ports are the same wherever
+ * the caller runs, and the mock server follows the page's origin.
  */
 type ServiceLocations = Record<Target, (baseDomain: string) => string>;
 
@@ -54,49 +65,49 @@ export const SERVICE_URLS = {
     production: (d) => `https://user-settings-service.services.${d}`,
     staging: (d) => `https://staging-user-settings-service.services.${d}`,
     local: () => 'http://127.0.0.1:4110',
-    mock: () => 'https://localhost:3010/services/usersettingsservice'
+    mock: () => `${mockOrigin()}/services/usersettingsservice`
   },
   highlight: {
     production: (d) => `https://highlights.services.${d}`,
     staging: (d) => `https://staging-highlights.services.${d}`,
     local: () => 'http://127.0.0.1:4120',
-    mock: () => 'https://localhost:3010/services/highlight'
+    mock: () => `${mockOrigin()}/services/highlight`
   },
   pdfGenerator: {
     production: (d) => `https://pdfgenerator.services.${d}`,
     staging: (d) => `https://staging-pdfgenerator.services.${d}`,
     local: () => 'http://127.0.0.1:4130',
-    mock: () => 'https://localhost:3010/services/pdfgenerator'
+    mock: () => `${mockOrigin()}/services/pdfgenerator`
   },
   writingTask: {
     production: (d) => `https://writingtask.services.${d}`,
     staging: (d) => `https://staging-writingtask.services.${d}`,
     local: () => 'http://127.0.0.1:4140',
-    mock: () => 'https://localhost:3010/services/writingtask'
+    mock: () => `${mockOrigin()}/services/writingtask`
   },
   solrProxy: {
     production: (d) => `https://solr-proxy.eu-west-1.${d}`,
     staging: (d) => `https://solr-proxy-staging.eu-west-1.${d}`,
     local: () => 'http://127.0.0.1:4150',
-    mock: () => 'https://localhost:3010/services/solrproxy'
+    mock: () => `${mockOrigin()}/services/solrproxy`
   },
   tagging: {
     production: (d) => `https://tagging.services.${d}`,
     staging: (d) => `https://staging-tagging.services.${d}`,
     local: () => 'http://127.0.0.1:4160',
-    mock: () => 'https://localhost:3010/services/tagging'
+    mock: () => `${mockOrigin()}/services/tagging`
   },
   aiBot: {
     production: (d) => `https://ai-bot-service.eu-west-1.${d}`,
     staging: (d) => `https://ai-bot-service-staging.eu-west-1.${d}`,
     local: () => 'http://127.0.0.1:4170',
-    mock: () => 'https://localhost:3010/services/aibotservice'
+    mock: () => `${mockOrigin()}/services/aibotservice`
   },
   cookieConsentLog: {
     production: (d) => `https://cookieconsentlog.services.${d}`,
     staging: (d) => `https://staging-cookieconsentlog.services.${d}`,
     local: () => 'http://127.0.0.1:4180',
-    mock: () => 'https://localhost:3010/services/cookieconsentlog'
+    mock: () => `${mockOrigin()}/services/cookieconsentlog`
   },
   polly: {
     // Its container port 3000 is taken by nuxt dev, hence 3200 rather than a
@@ -104,14 +115,14 @@ export const SERVICE_URLS = {
     production: (d) => `https://appear-polly.services.${d}`,
     staging: (d) => `https://staging-appear-polly.services.${d}`,
     local: () => 'http://127.0.0.1:3200',
-    mock: () => 'https://localhost:3010/services/polly'
+    mock: () => `${mockOrigin()}/services/polly`
   },
   quiz: {
     // Gale has no local instance, so `local` shares the staging one.
     production: () => 'https://api.iquiz.dk/api',
     staging: () => 'https://galecms.test.tibalo.dk/api',
     local: () => 'https://galecms.test.tibalo.dk/api',
-    mock: () => 'https://localhost:3010/galeapi/api'
+    mock: () => `${mockOrigin()}/galeapi/api`
   }
 } as const satisfies Record<string, ServiceLocations>;
 
