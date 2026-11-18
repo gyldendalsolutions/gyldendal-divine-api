@@ -13,6 +13,7 @@ export * from './services/user_settings_clientsettings.js';
 export * from './services/user_settings_bookmarks.js';
 export * from './services/user_settings_continue.js';
 export * from './services/user_settings_mru.js';
+export * from './services/user_settings_read_pages.js';
 export * from './services/pdf_generator.js';
 export * from './services/highlevel/tagging/user_folders.js';
 export * from './services/ai_bot_service.js';
